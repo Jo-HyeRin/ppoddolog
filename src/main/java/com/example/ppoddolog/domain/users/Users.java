@@ -20,4 +20,18 @@ public class Users {
     private String role;
     private Timestamp updatedAt;
     private Timestamp createdAt;
+
+    // 회원가입
+    public Users(String username, String password, String realname, String nickname, String email, String address,
+            String phone, String photo) {
+        this.username = username;
+        this.password = password;
+        this.realname = realname;
+        this.nickname = nickname;
+        this.email = email;
+        this.address = address;
+        this.phone = phone;
+        this.photo = photo;
+        this.role = "user";
+    }
 }

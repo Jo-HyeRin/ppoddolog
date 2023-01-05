@@ -17,7 +17,7 @@
 	<insert id="insert">
 		INSERT
 		INTO users(username, password, realname, nickname, email, address, phone, photo, role, updated_at, created_at)
-		VALUES(#{username}, #{password}, #{realname}, #{nickname}, #{email}, #{address}, #{phone}, #{photo}, #{role}, now(), now())
+		VALUES(#{username}, #{password}, #{realname}, #{nickname}, #{email}, #{address}, #{phone}, #{photo}, "user", now(), now())
 	</insert>
 
     <update id="update">
