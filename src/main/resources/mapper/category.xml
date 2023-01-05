@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ppoddolog.domain.category.CategoryDao">
+
+	<select id="findById"
+		resultType="com.example.ppoddolog.domain.category.Category">
+		SELECT * FROM category WHERE category_id=#{categoryId}
+	</select>
+
+	<select id="findAll"
+		resultType="com.example.ppoddolog.domain.category.Category">
+		SELECT * FROM category
+	</select>
+
+	<insert id="insert">
+		INSERT
+		INTO category(category_name, updated_at, created_at)
+		VALUES(#{categoryName}, now(), now())
+	</insert>
+
+    <update id="update">
+          UPDATE category
+		  SET category_name = #{categoryName}
+    </update>
+
+	<delete id="delete">
+		DELETE FROM category WHERE category_id = #{categoryId}
+	</delete>
+
+</mapper>

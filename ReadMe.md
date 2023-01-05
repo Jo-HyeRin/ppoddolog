@@ -5,5 +5,3 @@ SpringBoot
 Mybatis
 JSP
 MariaDB
-
-
