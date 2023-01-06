@@ -13,7 +13,7 @@
                 <div class="mb-5"></div>
 
                 <div class="d-grid gap-1 col-2 mx-auto">
-                    <button id="btnLogin" type="submit" class="btn btn-primary">로그인</button>
+                    <button id="btnLogin" type="button" class="btn btn-primary">로그인</button>
                 </div>
                 </br>
                 <div class="d-grid gap-1 col-2 mx-auto">
@@ -24,17 +24,20 @@
 
         <script>
             $("#btnLogin").click(() => {
-                let data = {
+                let loginData = {
                     username: $("#username").val(),
-                    password: $("#password").val(),
-                };
+                    password: $("#password").val()
+                }
+                login(loginData);
+            });
 
+            function login(loginData) {
                 $.ajax("/login", {
                     type: "POST",
                     dataType: "json",
-                    data: JSON.stringify(data),
+                    data: JSON.stringify(loginData),
                     headers: {
-                        "Content-Type": "application/json",
+                        "Content-Type": "application/json; charset=utf-8",
                     },
                 }).done((res) => {
                     if (res.code == 1) {
@@ -45,7 +48,7 @@
                         return false;
                     }
                 });
-            });
+            }
 
             $("#btnJoin").click(() => {
                 alert("회원가입페이지로 이동합니다");

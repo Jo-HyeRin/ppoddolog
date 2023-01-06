@@ -21,6 +21,9 @@ public class MyBatisConfig {
         sessionFactory.setDataSource(dataSource);
         sessionFactory.setMapperLocations(
                 new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
+        org.apache.ibatis.session.Configuration config = new org.apache.ibatis.session.Configuration();
+        config.setMapUnderscoreToCamelCase(true);
+        sessionFactory.setConfiguration(config);
         return sessionFactory.getObject();
     }
 

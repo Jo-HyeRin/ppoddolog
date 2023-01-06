@@ -29,6 +29,9 @@
                                         <a href="/board/List" style="color: #ffffff;">게시글목록</a>
                                     </li>
                                     <li class="nav-link">
+                                        <a href="/users/${principal.usersId}/detail" style="color: #ffffff;">내정보보기</a>
+                                    </li>
+                                    <li class="nav-link">
                                         <a href="/logout" onclick="disconnect()" style="color: #ffffff;">로그아웃</a>
                                     </li>
                                 </c:otherwise>

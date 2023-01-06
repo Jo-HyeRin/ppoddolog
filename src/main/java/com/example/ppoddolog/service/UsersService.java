@@ -7,6 +7,7 @@ import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.domain.users.UsersDao;
 import com.example.ppoddolog.web.dto.UsersReqDto.JoinDto;
 import com.example.ppoddolog.web.dto.UsersReqDto.LoginDto;
+import com.example.ppoddolog.web.dto.UsersRespDto.SignedDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,8 +23,19 @@ public class UsersService {
     }
 
     @Transactional
-    public Users 로그인(LoginDto loginDto) {
-        Users users = usersDao.login(loginDto.getUsername(), loginDto.getPassword());
-        return users;
+    public SignedDto 로그인(LoginDto loginDto) {
+        String username = loginDto.getUsername();
+        String password = loginDto.getPassword();
+        Users usersPS = usersDao.findByUsernameAndPassword(username, password);
+        System.out.println("디버그: usersPS.getUsersId() : " + usersPS.getUsersId());
+        if (usersPS == null)
+            return null;
+        SignedDto principal = new SignedDto(usersPS.getUsersId(), usersPS.getUsername());
+        System.out.println("디버그: " + principal.getUsersId());
+        return principal;
+    }
+
+    public Users 상세보기(Integer usersId) {
+        return usersDao.findById(usersId);
     }
 }

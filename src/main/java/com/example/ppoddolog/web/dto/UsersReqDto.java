@@ -3,6 +3,7 @@ package com.example.ppoddolog.web.dto;
 import com.example.ppoddolog.domain.users.Users;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 public class UsersReqDto {
@@ -26,6 +27,7 @@ public class UsersReqDto {
         }
     }
 
+    @NoArgsConstructor
     @Setter
     @Getter
     public static class LoginDto {

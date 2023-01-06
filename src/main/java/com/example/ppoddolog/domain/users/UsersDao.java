@@ -8,7 +8,8 @@ public interface UsersDao {
 
     public Users findById(Integer usersId);
 
-    public Users login(@Param("username") String username, @Param("password") String password);
+    // 로그인 - username, password로 select
+    public Users findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     public List<Users> findAll();
 

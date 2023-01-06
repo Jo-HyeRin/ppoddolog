@@ -10,7 +10,7 @@
 		VALUES(#{username}, #{password}, #{realname}, #{nickname}, #{email}, #{address}, #{phone}, #{photo}, "user", now(), now())
 	</insert>
 
-	<select id="login"
+	<select id="findByUsernameAndPassword"
 		resultType="com.example.ppoddolog.domain.users.Users">
 		SELECT * FROM users WHERE username=#{username} AND password=#{password}
 	</select>
