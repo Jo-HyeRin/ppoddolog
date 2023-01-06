@@ -10,4 +10,7 @@ public class ListDto {
     private String title;
     private String nickname;
     private String date;
+
+    private Integer boardId;
+    private Integer usersId;
 }

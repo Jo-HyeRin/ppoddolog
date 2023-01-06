@@ -15,7 +15,7 @@
 
 	<select id="findAll"
 		resultType="com.example.ppoddolog.web.dto.board.ListDto">
-		SELECT ROW_NUMBER() OVER (ORDER BY b.board_id ASC) AS row, b.title, u.nickname, DATE_FORMAT(b.created_at, '%Y년-%m월-%d일')date
+		SELECT ROW_NUMBER() OVER (ORDER BY b.board_id ASC) AS row, b.title, u.nickname, DATE_FORMAT(b.created_at, '%Y년-%m월-%d일')date, b.board_id, u.users_id
 		FROM board b
 		JOIN users u ON b.users_id = u.users_id;
 	</select>

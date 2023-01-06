@@ -15,7 +15,12 @@
                 <c:forEach var="boardList" items="${boardList}">
                     <tr>
                         <td>${boardList.row}</td>
-                        <td>${boardList.title}</td>
+                        <td>
+                            <div id="title" class="container p-4 my-4 border">
+                                <a href="/board/users/${boardList.usersId}/detail/${boardList.boardId}">
+                                    ${boardList.title}</a>
+                            </div>
+                        </td>
                         <td>${boardList.nickname}</td>
                         <td>${boardList.date}</td>
                     </tr>
