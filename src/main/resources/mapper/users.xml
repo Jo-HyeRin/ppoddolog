@@ -27,13 +27,13 @@
 
     <update id="update">
           UPDATE users
-		  SET username = #{username},
-		  password = #{password},
+		  SET password = #{password},
 		  nickname = #{nickname},
 		  email = #{email},
 		  address = #{address},
 		  phone = #{phone},
 		  photo = #{photo}
+		  WHERE users_id=#{usersId}
     </update>
 
 	<delete id="delete">

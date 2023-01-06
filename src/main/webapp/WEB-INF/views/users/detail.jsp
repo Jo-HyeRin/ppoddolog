@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="../layout/header.jsp" %>
 
+        <input id="usersId" type="hidden" value="${principal.usersId}" />
+
         <div class="container">
             <h2>나의 정보 보기</h2>
             <form>
@@ -33,8 +35,9 @@
 
         <script>
             $("#btnUpdate").click(() => {
+                let usersId = $("#usersId").val();
                 alert("회원수정페이지로 이동합니다");
-                location.href = "/";
+                location.href = "/users/" + usersId + "/update";
             });
         </script>
 

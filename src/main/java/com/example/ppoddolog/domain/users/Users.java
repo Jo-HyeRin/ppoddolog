@@ -2,6 +2,8 @@ package com.example.ppoddolog.domain.users;
 
 import java.sql.Timestamp;
 
+import com.example.ppoddolog.web.dto.UsersReqDto.UpdateDto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -33,5 +35,15 @@ public class Users {
         this.phone = phone;
         this.photo = photo;
         this.role = "user";
+    }
+
+    // 유저수정
+    public void updateUsers(UpdateDto updateDto) {
+        this.password = updateDto.getPassword();
+        this.nickname = updateDto.getNickname();
+        this.email = updateDto.getEmail();
+        this.address = updateDto.getAddress();
+        this.phone = updateDto.getPhone();
+        this.photo = updateDto.getPhoto();
     }
 }

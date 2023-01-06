@@ -34,4 +34,15 @@ public class UsersReqDto {
         private String username;
         private String password;
     }
+
+    @Setter
+    @Getter
+    public static class UpdateDto {
+        private String password;
+        private String nickname;
+        private String email;
+        private String address;
+        private String phone;
+        private String photo;
+    }
 }
