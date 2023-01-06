@@ -25,4 +25,11 @@ public class UsersReqDto {
             return users;
         }
     }
+
+    @Setter
+    @Getter
+    public static class LoginDto {
+        private String username;
+        private String password;
+    }
 }

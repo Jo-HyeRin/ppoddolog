@@ -4,21 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.ppoddolog.domain.users.UsersDao">
 
+	<insert id="insert">
+		INSERT
+		INTO users(username, password, realname, nickname, email, address, phone, photo, role, updated_at, created_at)
+		VALUES(#{username}, #{password}, #{realname}, #{nickname}, #{email}, #{address}, #{phone}, #{photo}, "user", now(), now())
+	</insert>
+
+	<select id="login"
+		resultType="com.example.ppoddolog.domain.users.Users">
+		SELECT * FROM users WHERE username=#{username} AND password=#{password}
+	</select>
+
 	<select id="findById"
 		resultType="com.example.ppoddolog.domain.users.Users">
-		SELECT * FROM user WHERE user_id=#{userId}
+		SELECT * FROM users WHERE users_id=#{usersId}
 	</select>
 
 	<select id="findAll"
 		resultType="com.example.ppoddolog.domain.users.Users">
 		SELECT * FROM users
 	</select>
-
-	<insert id="insert">
-		INSERT
-		INTO users(username, password, realname, nickname, email, address, phone, photo, role, updated_at, created_at)
-		VALUES(#{username}, #{password}, #{realname}, #{nickname}, #{email}, #{address}, #{phone}, #{photo}, "user", now(), now())
-	</insert>
 
     <update id="update">
           UPDATE users
