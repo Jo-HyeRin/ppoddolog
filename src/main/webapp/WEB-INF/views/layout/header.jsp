@@ -26,7 +26,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <li class="nav-link">
-                                        <a href="/board/List" style="color: #ffffff;">게시글목록</a>
+                                        <a href="/board/list" style="color: #ffffff;">게시글목록</a>
                                     </li>
                                     <li class="nav-link">
                                         <a href="/users/${principal.usersId}/detail" style="color: #ffffff;">내정보보기</a>
