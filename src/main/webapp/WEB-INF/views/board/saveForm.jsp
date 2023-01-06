@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="../layout/header.jsp" %>
 
+        <input id="usersId" type="hidden" value="${principal.usersId}" />
+
         <h2>게시글 등록</h2>
         <form>
-            // 카테고리 리스트 추가 필요
+            <p>카테고리 :</p>
+            <select id="categoryId">
+                <c:forEach var="categoryList" items="${categoryList}">
+                    <option value="${categoryList.categoryId}">${categoryList.categoryName}</option>
+                </c:forEach>
+            </select>
             <div class="mb-3">
                 ◆ 게시글 제목 <input id="title" type="text" class="form-control" placeholder="제목을 입력해주세요">
             </div>
@@ -20,13 +27,15 @@
 
         <script>
             $("#btnSave").click(() => {
-                // 로그인유저정보 추가 필요, 
+                let usersId = $("#usersId").val();
                 let data = {
                     title: $("#title").val(),
                     content: $("#content").val(),
+                    categoryId: $("#categoryId").val(),
+                    usersId: $("#usersId").val()
                 };
 
-                $.ajax("/users/{usersId}/board/save", {
+                $.ajax("/board/users/" + usersId + "/save", {
                     type: "POST",
                     dataType: "json",
                     data: JSON.stringify(data),

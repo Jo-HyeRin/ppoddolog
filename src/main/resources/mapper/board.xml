@@ -5,12 +5,16 @@
 <mapper namespace="com.example.ppoddolog.domain.board.BoardDao">
 
 	<select id="findById"
-		resultType="com.example.ppoddolog.domain.board.Board">
-		SELECT * FROM board WHERE board_id=#{boardId}
+		resultType="com.example.ppoddolog.web.dto.board.DetailDto">
+		SELECT b.title, b.content, c.category_name, u.nickname, DATE_FORMAT(b.created_at, '%Y년-%m월-%d일')date
+		FROM board b
+		JOIN users u ON b.users_id = u.users_id
+		JOIN category c ON b.category_id = c.category_id
+		WHERE board_id=#{boardId}
 	</select>
 
 	<select id="findAll"
-		resultType="com.example.ppoddolog.domain.board.Board">
+		resultType="com.example.ppoddolog.web.dto.board.ListDto">
 		SELECT ROW_NUMBER() OVER (ORDER BY b.board_id ASC) AS row, b.title, u.nickname, DATE_FORMAT(b.created_at, '%Y년-%m월-%d일')date
 		FROM board b
 		JOIN users u ON b.users_id = u.users_id;

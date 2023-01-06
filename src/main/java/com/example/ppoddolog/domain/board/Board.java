@@ -15,4 +15,12 @@ public class Board {
     private Integer categoryId;
     private Timestamp updatedAt;
     private Timestamp createdAt;
+
+    // 게시글등록
+    public Board(String title, String content, Integer usersId, Integer categoryId) {
+        this.title = title;
+        this.content = content;
+        this.usersId = usersId;
+        this.categoryId = categoryId;
+    }
 }

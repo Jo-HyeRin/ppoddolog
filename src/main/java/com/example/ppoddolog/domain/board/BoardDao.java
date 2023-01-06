@@ -2,11 +2,12 @@ package com.example.ppoddolog.domain.board;
 
 import java.util.List;
 
-import com.example.ppoddolog.web.dto.BoardRespDto.ListDto;
+import com.example.ppoddolog.web.dto.board.DetailDto;
+import com.example.ppoddolog.web.dto.board.ListDto;
 
 public interface BoardDao {
 
-    public Board findById(Integer boardId);
+    public DetailDto findById(Integer boardId);
 
     public List<ListDto> findAll();
 

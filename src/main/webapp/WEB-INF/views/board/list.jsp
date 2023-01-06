@@ -14,7 +14,7 @@
                 </thead>
                 <c:forEach var="boardList" items="${boardList}">
                     <tr>
-                        <td>${boardList.ROW}</td>
+                        <td>${boardList.row}</td>
                         <td>${boardList.title}</td>
                         <td>${boardList.nickname}</td>
                         <td>${boardList.date}</td>
@@ -22,5 +22,16 @@
                 </c:forEach>
             </table>
         </div>
+
+        <div class="d-grid gap-1 col-2 mx-auto">
+            <button id="btnSave" type="submit" class="btn btn-primary">게시글 등록</button>
+        </div>
+
+        <script>
+            $("#btnSave").click(() => {
+                let usersId = $("#usersId").val();
+                location.href = "/board/saveForm";
+            });
+        </script>
 
         <%@ include file="../layout/footer.jsp" %>
