@@ -54,4 +54,10 @@ public class UsersController {
             return new ResponseDto<>(-1, "로그인 실패", null);
         }
     }
+
+    @GetMapping("/logout")
+    public @ResponseBody ResponseDto<?> logout() {
+        session.invalidate();
+        return new ResponseDto<>(1, "로그아웃 성공", null);
+    }
 }
