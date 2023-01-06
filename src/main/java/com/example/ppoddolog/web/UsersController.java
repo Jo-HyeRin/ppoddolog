@@ -23,7 +23,7 @@ public class UsersController {
     private final UsersService usersService;
     private final HttpSession session;
 
-    @GetMapping("/main")
+    @GetMapping({ "/", "/main" })
     public String main() {
         return "main";
     }
@@ -56,8 +56,8 @@ public class UsersController {
     }
 
     @GetMapping("/logout")
-    public @ResponseBody ResponseDto<?> logout() {
+    public String logout() {
         session.invalidate();
-        return new ResponseDto<>(1, "로그아웃 성공", null);
+        return "redirect:/main";
     }
 }

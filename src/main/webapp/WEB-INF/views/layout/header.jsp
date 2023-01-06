@@ -13,19 +13,32 @@
         </head>
 
         <body>
-            <nav class="navbar navbar-expand-sm bg-warning navbar-dark">
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/">PPODDOLOG</a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapsibleNavbar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                        <ul class="navbar-nav">
-                            <li class="nav-item"><a class="nav-link" href="/joinForm">회원가입</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/loginForm">로그인</a></li>
-                            <li class="nav-item"><a class="nav-link" href="/logout">로그아웃</a></li>
+            <div class="container">
+                <header>
+                    <nav class="navbar navbar-expand-sm bg-warning navbar-dark">
+                        <a href="/main">PPODDOLOG(로고)</a>
+                        <ul class="navbar-nav" style="width: 100%">
+                            <c:choose>
+                                <c:when test="${empty principal}">
+                                    <li class="nav-link">
+                                        <a href="/loginForm" style="color: #ffffff;">로그인/회원가입</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="nav-link">
+                                        <a href="/board/List" style="color: #ffffff;">게시글목록</a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a href="/logout" onclick="disconnect()" style="color: #ffffff;">로그아웃</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
                         </ul>
-                    </div>
-                </div>
-            </nav>
+                    </nav>
+                </header>
+
+                <script>
+                    function disconnect() {
+                        alert("로그아웃이 완료되었습니다");
+                    }
+                </script>

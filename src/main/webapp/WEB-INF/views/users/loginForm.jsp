@@ -39,7 +39,7 @@
                 }).done((res) => {
                     if (res.code == 1) {
                         alert("로그인 성공");
-                        location.href = "/main";
+                        location.href = "/";
                     } else {
                         alert(res.msg);
                         return false;
