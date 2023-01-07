@@ -50,6 +50,7 @@ public class UsersService {
     @Transactional
     public Users 유저수정(UpdateDto updateDto, Integer usersId) {
         Users usersPS = usersDao.findById(usersId);
+        updateDto.setPassword(sha256.encrypt(updateDto.getPassword()));
         usersPS.updateUsers(updateDto);
         usersDao.update(usersPS);
         return usersPS;
