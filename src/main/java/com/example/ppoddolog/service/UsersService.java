@@ -11,6 +11,7 @@ import com.example.ppoddolog.web.dto.UsersReqDto.JoinDto;
 import com.example.ppoddolog.web.dto.UsersReqDto.LoginDto;
 import com.example.ppoddolog.web.dto.UsersReqDto.UpdateDto;
 import com.example.ppoddolog.web.dto.UsersRespDto.SignedDto;
+import com.example.ppoddolog.web.dto.admin.ListDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,7 +59,16 @@ public class UsersService {
     }
 
     // 관리자페이지---------------------------------------------------//
-    public List<Users> 활동회원목록() {
+    public List<ListDto> 활동회원목록() {
         return usersDao.findAllActive();
+    }
+
+    public List<ListDto> 탈퇴회원목록() {
+        return usersDao.findAllInactive();
+    }
+
+    public void 회원영구삭제(Integer usersId) {
+        Users usersPS = usersDao.findById(usersId);
+        usersDao.delete(usersPS);
     }
 }

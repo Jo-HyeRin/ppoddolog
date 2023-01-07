@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.example.ppoddolog.web.dto.admin.ListDto;
+
 public interface UsersDao {
 
     public Users findById(Integer usersId);
@@ -23,7 +25,7 @@ public interface UsersDao {
     public void delete(Users users);
 
     // 관리자 ----------------------------------------------//
-    public List<Users> findAllActive();
+    public List<ListDto> findAllActive();
 
-    public List<Users> findAllInactive();
+    public List<ListDto> findAllInactive();
 }

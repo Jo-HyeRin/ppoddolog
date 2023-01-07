@@ -26,7 +26,10 @@
                                 </c:when>
                                 <c:when test="${principal.role == 'admin'}">
                                     <li class="nav-link">
-                                        <a href="/admin/usersList" style="color: #ffffff;">활동회원목록</a>
+                                        <a href="/admin/activeUsersList" style="color: #ffffff;">활동회원목록</a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a href="/admin/leaveUsersList" style="color: #ffffff;">탈퇴회원목록</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>
