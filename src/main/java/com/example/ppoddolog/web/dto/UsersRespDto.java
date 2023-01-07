@@ -12,5 +12,7 @@ public class UsersRespDto {
     public static class SignedDto {
         private Integer usersId;
         private String username;
+        private String role;
+        private String state;
     }
 }

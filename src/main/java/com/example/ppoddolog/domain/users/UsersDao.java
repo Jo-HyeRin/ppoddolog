@@ -21,4 +21,9 @@ public interface UsersDao {
     public void leave(Users users);
 
     public void delete(Users users);
+
+    // 관리자 ----------------------------------------------//
+    public List<Users> findAllActive();
+
+    public List<Users> findAllInactive();
 }

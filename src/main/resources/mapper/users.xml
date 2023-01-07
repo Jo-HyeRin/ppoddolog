@@ -25,6 +25,18 @@
 		SELECT * FROM users
 	</select>
 
+	<select id="findAllActive"
+		resultType="com.example.ppoddolog.web.dto.admin.ListDto">
+		SELECT ROW_NUMBER() OVER (ORDER BY users_id ASC) AS row, users_id, username, realname, nickname, DATE_FORMAT(created_at, '%Y년 %m월 %d일')date
+		FROM users
+		WHERE state = "active"
+	</select>
+
+	<select id="findAllInactive"
+		resultType="com.example.ppoddolog.web.dto.admin.ListDto">
+		SELECT * FROM users WHERE state = "inactive"
+	</select>
+
     <update id="update">
           UPDATE users
 		  SET password = #{password},

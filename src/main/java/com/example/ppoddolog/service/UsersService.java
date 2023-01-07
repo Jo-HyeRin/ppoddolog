@@ -1,5 +1,7 @@
 package com.example.ppoddolog.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +32,8 @@ public class UsersService {
         Users usersPS = usersDao.findByUsernameAndPassword(username, password);
         if (usersPS == null)
             return null;
-        SignedDto principal = new SignedDto(usersPS.getUsersId(), usersPS.getUsername());
+        SignedDto principal = new SignedDto(usersPS.getUsersId(), usersPS.getUsername(), usersPS.getRole(),
+                usersPS.getState());
         return principal;
     }
 
@@ -52,5 +55,10 @@ public class UsersService {
         usersPS.leaveUsers();
         usersDao.leave(usersPS);
         return usersPS;
+    }
+
+    // 관리자페이지---------------------------------------------------//
+    public List<Users> 활동회원목록() {
+        return usersDao.findAllActive();
     }
 }
