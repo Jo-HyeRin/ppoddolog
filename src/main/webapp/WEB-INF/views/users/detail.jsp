@@ -32,6 +32,10 @@
             </div>
             <br />
             <div class="d-grid gap-1 col-2 mx-auto">
+                <button id="btnUpdatePassword" type="submit" class="btn btn-primary">비밀번호변경</button>
+            </div>
+            <br />
+            <div class="d-grid gap-1 col-2 mx-auto">
                 <button id="btnLeaveUsers" type="button" class="btn btn-primary">회원탈퇴하기</button>
             </div>
 
@@ -42,6 +46,12 @@
                 let usersId = $("#usersId").val();
                 alert("회원수정 페이지로 이동합니다");
                 location.href = "/users/" + usersId + "/update";
+            });
+
+            $("#btnUpdatePassword").click(() => {
+                let usersId = $("#usersId").val();
+                alert("비밀번호변경 페이지로 이동합니다");
+                location.href = "/users/" + usersId + "/updatePassword";
             });
 
             $("#btnLeaveUsers").click(() => {

@@ -11,12 +11,14 @@
                 <br />
                 <div class="mb-3 mt-3">
                     <h3>◆ title </h3>
-                    <input id="title" type="text" class="form-control" placeholder=${boardPS.title}>
+                    <input id="title" type="text" value="${boardPS.title}" class="form-control"
+                        placeholder=${boardPS.title}>
                 </div>
                 <br />
                 <div class="mb-3 mt-3">
                     <h3>◆ content </h3>
-                    <input id="content" type="text" class="form-control" placeholder=${boardPS.content}>
+                    <input id="content" type="text" value="${boardPS.content}" class="form-control"
+                        placeholder=${boardPS.content}>
                 </div>
                 <br />
                 <div class="mb-3 mt-3" id="content">

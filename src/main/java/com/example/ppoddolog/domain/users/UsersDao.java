@@ -23,6 +23,9 @@ public interface UsersDao {
 
     public void update(Users users);
 
+    // 비밀번호변경
+    public void updatePassword(Users users);
+
     // 회원탈퇴
     public void leave(Users users);
 

@@ -12,34 +12,33 @@
                         <h3>◆아이디</h3> ${usersPS.username}
                     </div>
                     <br />
-                    <div class="mb-3 mt-3">
-                        <h3>◆비밀번호</h3>
-                        <input id="password" type="password" class="form-control" placeholder="변경할비밀번호입력하세요">
-                    </div>
-                    <br />
                     <div class="mb-3 mt-3" id="realname">
                         <h3>◆이름</h3>${usersPS.realname}
                     </div>
                     <br />
                     <div class="mb-3 mt-3">
                         <h3>◆닉네임</h3>
-                        <input id="nickname" type="text" class="form-control" placeholder="${usersPS.nickname}">
+                        <input id="nickname" type="text" value="${usersPS.nickname}" class="form-control"
+                            placeholder="${usersPS.nickname}">
                     </div>
                     <div class="mb-3 mt-3">
-                        <h3>◆이메일</h3><input id="email" type="text" class="form-control" placeholder="${usersPS.email}">
+                        <h3>◆이메일</h3><input id="email" type="text" value="${usersPS.email}" class="form-control"
+                            placeholder="${usersPS.email}">
                     </div>
                     <br />
                     <div class="mb-3 mt-3">
-                        <h3>◆주소</h3><input id="address" type="text" class="form-control"
+                        <h3>◆주소</h3><input id="address" type="text" value="${usersPS.address}" class="form-control"
                             placeholder="${usersPS.address}">
                     </div>
                     <br />
                     <div class="mb-3 mt-3">
-                        <h3>◆연락처</h3><input id="phone" type="text" class="form-control" placeholder="${usersPS.phone}">
+                        <h3>◆연락처</h3><input id="phone" type="text" value="${usersPS.phone}" class="form-control"
+                            placeholder="${usersPS.phone}">
                     </div>
                     <br />
                     <div class="mb-3 mt-3">
-                        <h3>◆사진</h3><input id="photo" type="text" class="form-control" placeholder="${usersPS.photo}">
+                        <h3>◆사진</h3><input id="photo" type="text" value="${usersPS.photo}" class="form-control"
+                            placeholder="${usersPS.photo}">
                     </div>
                     <br />
                 </div>

@@ -38,11 +38,17 @@ public class UsersReqDto {
     @Setter
     @Getter
     public static class UpdateDto {
-        private String password;
         private String nickname;
         private String email;
         private String address;
         private String phone;
         private String photo;
+    }
+
+    @Setter
+    @Getter
+    public static class PasswordDto {
+        private String passwordNow;
+        private String password;
     }
 }

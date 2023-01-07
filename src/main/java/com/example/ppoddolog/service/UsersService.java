@@ -13,6 +13,7 @@ import com.example.ppoddolog.web.dto.users.DetailUsersDto;
 import com.example.ppoddolog.web.dto.users.SignedDto;
 import com.example.ppoddolog.web.dto.users.UsersReqDto.JoinDto;
 import com.example.ppoddolog.web.dto.users.UsersReqDto.LoginDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.PasswordDto;
 import com.example.ppoddolog.web.dto.users.UsersReqDto.UpdateDto;
 
 import lombok.RequiredArgsConstructor;
@@ -50,9 +51,18 @@ public class UsersService {
     @Transactional
     public Users 유저수정(UpdateDto updateDto, Integer usersId) {
         Users usersPS = usersDao.findById(usersId);
-        updateDto.setPassword(sha256.encrypt(updateDto.getPassword()));
         usersPS.updateUsers(updateDto);
         usersDao.update(usersPS);
+        return usersPS;
+    }
+
+    @Transactional
+    public Users 비밀번호변경(PasswordDto passwordDto, Integer usersId) {
+        Users usersPS = usersDao.findById(usersId);
+        // 새 비밀번호로 변경
+        passwordDto.setPassword(sha256.encrypt(passwordDto.getPassword()));
+        usersPS.updatePassword(passwordDto);
+        usersDao.updatePassword(usersPS);
         return usersPS;
     }
 

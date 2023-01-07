@@ -18,6 +18,7 @@ import com.example.ppoddolog.web.dto.users.DetailUsersDto;
 import com.example.ppoddolog.web.dto.users.SignedDto;
 import com.example.ppoddolog.web.dto.users.UsersReqDto.JoinDto;
 import com.example.ppoddolog.web.dto.users.UsersReqDto.LoginDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.PasswordDto;
 import com.example.ppoddolog.web.dto.users.UsersReqDto.UpdateDto;
 
 import lombok.RequiredArgsConstructor;
@@ -82,13 +83,25 @@ public class UsersController {
 
     @PutMapping("/users/{usersId}/update")
     public @ResponseBody ResponseDto<?> updateUsers(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId) {
-        Users usersPS = usersService.유저수정(updateDto, usersId);
+        usersService.유저수정(updateDto, usersId);
         return new ResponseDto<>(1, "내 정보 수정 성공", null);
+    }
+
+    @GetMapping("/users/{usersId}/updatePassword")
+    public String updatePasswordForm(@PathVariable Integer usersId, Model model) {
+        return "/users/updatePassword";
+    }
+
+    @PutMapping("/users/{usersId}/updatePassword")
+    public @ResponseBody ResponseDto<?> updatePassword(@RequestBody PasswordDto passwordDto,
+            @PathVariable Integer usersId) {
+        usersService.비밀번호변경(passwordDto, usersId);
+        return new ResponseDto<>(1, "비밀번호 변경 성공", null);
     }
 
     @PutMapping("/users/{usersId}/leave")
     public @ResponseBody ResponseDto<?> leaveUsers(@PathVariable Integer usersId) {
-        Users usersPS = usersService.유저비활성화(usersId);
+        usersService.유저비활성화(usersId);
         session.invalidate();
         return new ResponseDto<>(1, "유저탈퇴 성공", null);
     }

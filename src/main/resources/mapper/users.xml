@@ -55,12 +55,17 @@
 
     <update id="update">
           UPDATE users
-		  SET password = #{password},
-		  nickname = #{nickname},
+		  SET nickname = #{nickname},
 		  email = #{email},
 		  address = #{address},
 		  phone = #{phone},
 		  photo = #{photo}
+		  WHERE users_id=#{usersId}
+    </update>
+
+	<update id="updatePassword">
+          UPDATE users
+		  SET password = #{password}
 		  WHERE users_id=#{usersId}
     </update>
 
