@@ -34,7 +34,7 @@ public class UsersService {
     @Transactional
     public SignedDto 로그인(LoginDto loginDto) {
         String username = loginDto.getUsername();
-        String password = loginDto.getPassword();
+        String password = sha256.encrypt(loginDto.getPassword());
         Users usersPS = usersDao.findByUsernameAndPassword(username, password);
         if (usersPS == null)
             return null;
