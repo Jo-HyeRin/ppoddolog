@@ -7,7 +7,9 @@ import com.example.ppoddolog.web.dto.board.ListDto;
 
 public interface BoardDao {
 
-    public DetailDto findById(Integer boardId);
+    public Board findById(Integer boardId);
+
+    public DetailDto findByIdDetail(Integer boardId);
 
     public List<ListDto> findAll();
 

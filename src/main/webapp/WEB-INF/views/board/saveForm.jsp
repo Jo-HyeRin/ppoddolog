@@ -45,7 +45,7 @@
                 }).done((res) => {
                     if (res.code == 1) {
                         alert("게시글 등록 성공");
-                        location.href = "/main";
+                        location.href = "/board/list";
                     } else {
                         alert(res.msg);
                         return false;

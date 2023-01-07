@@ -21,4 +21,12 @@ public class BoardReqDto {
         }
     }
 
+    @Setter
+    @Getter
+    public static class UpdateDto {
+        private String title;
+        private String content;
+        private Integer categoryId;
+    }
+
 }

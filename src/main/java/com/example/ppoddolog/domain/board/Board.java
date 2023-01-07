@@ -2,6 +2,8 @@ package com.example.ppoddolog.domain.board;
 
 import java.sql.Timestamp;
 
+import com.example.ppoddolog.web.dto.board.BoardReqDto.UpdateDto;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -22,5 +24,12 @@ public class Board {
         this.content = content;
         this.usersId = usersId;
         this.categoryId = categoryId;
+    }
+
+    // 게시글수정
+    public void updateBoard(UpdateDto updateDto) {
+        this.title = updateDto.getTitle();
+        this.content = updateDto.getContent();
+        this.categoryId = updateDto.getCategoryId();
     }
 }

@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ppoddolog.domain.board.Board;
 import com.example.ppoddolog.domain.board.BoardDao;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.SaveDto;
+import com.example.ppoddolog.web.dto.board.BoardReqDto.UpdateDto;
 import com.example.ppoddolog.web.dto.board.DetailDto;
 import com.example.ppoddolog.web.dto.board.ListDto;
 
@@ -28,7 +30,14 @@ public class BoardService {
     }
 
     public DetailDto 상세보기(Integer boardId) {
-        return boardDao.findById(boardId);
+        return boardDao.findByIdDetail(boardId);
     }
 
+    @Transactional
+    public Board 게시글수정(UpdateDto updateDto, Integer boardId) {
+        Board boardPS = boardDao.findById(boardId);
+        boardPS.updateBoard(updateDto);
+        boardDao.update(boardPS);
+        return boardPS;
+    }
 }

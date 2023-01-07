@@ -11,4 +11,5 @@ public class DetailDto {
     private String categoryName;
     private String nickname;
     private String date;
+    private Integer boardId;
 }

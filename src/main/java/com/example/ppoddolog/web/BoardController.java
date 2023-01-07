@@ -9,14 +9,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.ppoddolog.domain.board.Board;
 import com.example.ppoddolog.domain.category.Category;
 import com.example.ppoddolog.service.BoardService;
 import com.example.ppoddolog.service.CategoryService;
 import com.example.ppoddolog.web.dto.ResponseDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.SaveDto;
+import com.example.ppoddolog.web.dto.board.BoardReqDto.UpdateDto;
 import com.example.ppoddolog.web.dto.board.DetailDto;
 import com.example.ppoddolog.web.dto.board.ListDto;
 
@@ -55,5 +58,21 @@ public class BoardController {
         DetailDto boardPS = boardService.상세보기(boardId);
         model.addAttribute("boardPS", boardPS);
         return "/board/detail";
+    }
+
+    @GetMapping("/board/updateForm/{boardId}")
+    public String updateForm(@PathVariable Integer boardId, Model model) {
+        DetailDto boardPS = boardService.상세보기(boardId);
+        model.addAttribute("boardPS", boardPS);
+        List<Category> categoryList = categoryService.카테고리목록();
+        model.addAttribute("categoryList", categoryList);
+        return "/board/updateForm";
+    }
+
+    @PutMapping("/board/users/{usersId}/update/{boardId}")
+    public @ResponseBody ResponseDto<?> update(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId,
+            @PathVariable Integer boardId) {
+        Board boardPS = boardService.게시글수정(updateDto, boardId);
+        return new ResponseDto<>(1, "게시글 수정 성공", null);
     }
 }
