@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -66,22 +67,30 @@ public class UsersController {
     }
 
     @GetMapping("/users/{usersId}/detail")
-    public String detail(@PathVariable Integer usersId, Model model) {
+    public String detailUsers(@PathVariable Integer usersId, Model model) {
         Users usersPS = usersService.상세보기(usersId);
         model.addAttribute("usersPS", usersPS);
         return "/users/detail";
     }
 
     @GetMapping("/users/{usersId}/update")
-    public String update(@PathVariable Integer usersId, Model model) {
+    public String updateForm(@PathVariable Integer usersId, Model model) {
         Users usersPS = usersService.상세보기(usersId);
         model.addAttribute("usersPS", usersPS);
         return "/users/update";
     }
 
     @PutMapping("/users/{usersId}/update")
-    public @ResponseBody ResponseDto<?> update(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId) {
+    public @ResponseBody ResponseDto<?> updateUsers(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId) {
         Users usersPS = usersService.유저수정(updateDto, usersId);
         return new ResponseDto<>(1, "내 정보 수정 성공", null);
     }
+
+    @PutMapping("/users/{usersId}/leave")
+    public @ResponseBody ResponseDto<?> leaveUsers(@PathVariable Integer usersId) {
+        Users usersPS = usersService.유저탈퇴(usersId);
+        session.invalidate();
+        return new ResponseDto<>(1, "유저탈퇴 성공", null);
+    }
+
 }

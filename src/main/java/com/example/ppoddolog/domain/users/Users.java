@@ -20,6 +20,7 @@ public class Users {
     private String phone;
     private String photo;
     private String role;
+    private String state;
     private Timestamp updatedAt;
     private Timestamp createdAt;
 
@@ -35,6 +36,7 @@ public class Users {
         this.phone = phone;
         this.photo = photo;
         this.role = "user";
+        this.state = "active";
     }
 
     // 유저수정
@@ -45,5 +47,10 @@ public class Users {
         this.address = updateDto.getAddress();
         this.phone = updateDto.getPhone();
         this.photo = updateDto.getPhoto();
+    }
+
+    // 유저탈퇴
+    public void leaveUsers() {
+        this.state = "inactive";
     }
 }

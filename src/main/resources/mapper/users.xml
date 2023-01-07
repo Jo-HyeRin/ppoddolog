@@ -6,8 +6,8 @@
 
 	<insert id="insert">
 		INSERT
-		INTO users(username, password, realname, nickname, email, address, phone, photo, role, updated_at, created_at)
-		VALUES(#{username}, #{password}, #{realname}, #{nickname}, #{email}, #{address}, #{phone}, #{photo}, "user", now(), now())
+		INTO users(username, password, realname, nickname, email, address, phone, photo, role, state, updated_at, created_at)
+		VALUES(#{username}, #{password}, #{realname}, #{nickname}, #{email}, #{address}, #{phone}, #{photo}, "user", "active", now(), now())
 	</insert>
 
 	<select id="findByUsernameAndPassword"
@@ -35,6 +35,12 @@
 		  photo = #{photo}
 		  WHERE users_id=#{usersId}
     </update>
+
+	<update id="leave">
+		UPDATE users
+		SET state = "inactive"
+		WHERE users_id=#{usersId}
+	</update>
 
 	<delete id="delete">
 		DELETE FROM users WHERE users_id = #{usersId}

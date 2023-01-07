@@ -45,4 +45,12 @@ public class UsersService {
         usersDao.update(usersPS);
         return usersPS;
     }
+
+    @Transactional
+    public Users 유저탈퇴(Integer usersId) {
+        Users usersPS = usersDao.findById(usersId);
+        usersPS.leaveUsers();
+        usersDao.leave(usersPS);
+        return usersPS;
+    }
 }

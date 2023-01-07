@@ -17,5 +17,8 @@ public interface UsersDao {
 
     public void update(Users users);
 
+    // 회원탈퇴
+    public void leave(Users users);
+
     public void delete(Users users);
 }
