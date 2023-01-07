@@ -7,11 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.domain.users.UsersDao;
-import com.example.ppoddolog.web.dto.UsersReqDto.JoinDto;
-import com.example.ppoddolog.web.dto.UsersReqDto.LoginDto;
-import com.example.ppoddolog.web.dto.UsersReqDto.UpdateDto;
-import com.example.ppoddolog.web.dto.UsersRespDto.SignedDto;
-import com.example.ppoddolog.web.dto.admin.ListDto;
+import com.example.ppoddolog.web.dto.admin.UsersListDto;
+import com.example.ppoddolog.web.dto.users.DetailUsersDto;
+import com.example.ppoddolog.web.dto.users.SignedDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.JoinDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.LoginDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.UpdateDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -38,8 +39,8 @@ public class UsersService {
         return principal;
     }
 
-    public Users 상세보기(Integer usersId) {
-        return usersDao.findById(usersId);
+    public DetailUsersDto 상세보기(Integer usersId) {
+        return usersDao.findByIdDetail(usersId);
     }
 
     @Transactional
@@ -51,7 +52,7 @@ public class UsersService {
     }
 
     @Transactional
-    public Users 유저탈퇴(Integer usersId) {
+    public Users 유저비활성화(Integer usersId) {
         Users usersPS = usersDao.findById(usersId);
         usersPS.leaveUsers();
         usersDao.leave(usersPS);
@@ -59,12 +60,32 @@ public class UsersService {
     }
 
     // 관리자페이지---------------------------------------------------//
-    public List<ListDto> 활동회원목록() {
+    public List<UsersListDto> 활동회원목록() {
         return usersDao.findAllActive();
     }
 
-    public List<ListDto> 탈퇴회원목록() {
+    public List<UsersListDto> 정지회원목록() {
+        return usersDao.findAllStop();
+    }
+
+    public List<UsersListDto> 탈퇴회원목록() {
         return usersDao.findAllInactive();
+    }
+
+    @Transactional
+    public Users 회원정지(Integer usersId) {
+        Users usersPS = usersDao.findById(usersId);
+        usersPS.stopUsers();
+        usersDao.stop(usersPS);
+        return usersPS;
+    }
+
+    @Transactional
+    public Users 회원정지해제(Integer usersId) {
+        Users usersPS = usersDao.findById(usersId);
+        usersPS.activeUsers();
+        usersDao.active(usersPS);
+        return usersPS;
     }
 
     public void 회원영구삭제(Integer usersId) {

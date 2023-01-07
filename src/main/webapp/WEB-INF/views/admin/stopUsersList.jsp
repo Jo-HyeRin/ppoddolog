@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="../layout/header.jsp" %>
 
-        <h2 style="text-align: center">활동회원목록</h2>
+        <h2 style="text-align: center">정지회원목록</h2>
         <div class="container mt-3">
             <table class="table table-bordered" style="text-align: center">
                 <thead>
@@ -11,7 +11,7 @@
                         <th>아이디</th>
                         <th>실명</th>
                         <th>닉네임</th>
-                        <th>가입일</th>
+                        <th>정지일</th>
                     </tr>
                 </thead>
                 <c:forEach var="usersList" items="${usersList}">

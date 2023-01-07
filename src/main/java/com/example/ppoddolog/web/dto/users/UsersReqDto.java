@@ -1,4 +1,4 @@
-package com.example.ppoddolog.web.dto;
+package com.example.ppoddolog.web.dto.users;
 
 import com.example.ppoddolog.domain.users.Users;
 

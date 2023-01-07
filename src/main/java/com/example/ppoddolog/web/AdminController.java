@@ -9,13 +9,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.service.BoardService;
 import com.example.ppoddolog.service.UsersService;
 import com.example.ppoddolog.web.dto.ResponseDto;
-import com.example.ppoddolog.web.dto.admin.ListDto;
+import com.example.ppoddolog.web.dto.admin.UsersListDto;
+import com.example.ppoddolog.web.dto.users.DetailUsersDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,27 +30,46 @@ public class AdminController {
 
     @GetMapping("/admin/activeUsersList")
     public String activeUsersList(Model model) {
-        List<ListDto> usersList = usersService.활동회원목록();
+        List<UsersListDto> usersList = usersService.활동회원목록();
         model.addAttribute("usersList", usersList);
         return "/admin/activeUsersList";
     }
 
+    @GetMapping("/admin/stopUsersList")
+    public String stopUsersList(Model model) {
+        List<UsersListDto> usersList = usersService.정지회원목록();
+        model.addAttribute("usersList", usersList);
+        return "/admin/stopUsersList";
+    }
+
     @GetMapping("/admin/leaveUsersList")
     public String leaveUsersList(Model model) {
-        List<ListDto> usersList = usersService.탈퇴회원목록();
+        List<UsersListDto> usersList = usersService.탈퇴회원목록();
         model.addAttribute("usersList", usersList);
         return "/admin/leaveUsersList";
     }
 
-    @GetMapping("/admin/usersDetail/{usersId}")
+    @GetMapping("/admin/detailUsers/{usersId}")
     public String detailUsers(@PathVariable Integer usersId, Model model) {
-        Users usersPS = usersService.상세보기(usersId);
+        DetailUsersDto usersPS = usersService.상세보기(usersId);
         model.addAttribute("usersPS", usersPS);
-        return "/admin/usersDetail";
+        return "/admin/detailUsers";
+    }
+
+    @PutMapping("/admin/stopUsers/{usersId}")
+    public @ResponseBody ResponseDto<?> stopUsers(@PathVariable Integer usersId) {
+        usersService.회원정지(usersId);
+        return new ResponseDto<>(1, "회원 정지 성공", null);
+    }
+
+    @PutMapping("/admin/activeUsers/{usersId}")
+    public @ResponseBody ResponseDto<?> activeUsers(@PathVariable Integer usersId) {
+        usersService.회원정지해제(usersId);
+        return new ResponseDto<>(1, "회원 정지 해제 성공", null);
     }
 
     @DeleteMapping("/admin/deleteUsers/{usersId}")
-    public @ResponseBody ResponseDto<?> deleteBoard(@PathVariable Integer usersId) {
+    public @ResponseBody ResponseDto<?> deleteUsers(@PathVariable Integer usersId) {
         usersService.회원영구삭제(usersId);
         return new ResponseDto<>(1, "회원 영구 삭제 성공", null);
     }

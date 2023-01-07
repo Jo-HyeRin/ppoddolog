@@ -2,7 +2,7 @@ package com.example.ppoddolog.domain.users;
 
 import java.sql.Timestamp;
 
-import com.example.ppoddolog.web.dto.UsersReqDto.UpdateDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.UpdateDto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -52,5 +52,15 @@ public class Users {
     // 유저탈퇴
     public void leaveUsers() {
         this.state = "inactive";
+    }
+
+    // 회원정지
+    public void stopUsers() {
+        this.state = "stop";
+    }
+
+    // 회원정지해제
+    public void activeUsers() {
+        this.state = "active";
     }
 }

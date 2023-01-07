@@ -5,12 +5,11 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class ListDto {
-    private Integer row;
+public class DetailBoardDto {
+    private Integer boardId;
     private String title;
+    private String content;
+    private String categoryName;
     private String nickname;
     private String date;
-
-    private Integer boardId;
-    private Integer usersId;
 }

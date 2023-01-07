@@ -9,8 +9,8 @@ import com.example.ppoddolog.domain.board.Board;
 import com.example.ppoddolog.domain.board.BoardDao;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.SaveDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.UpdateDto;
-import com.example.ppoddolog.web.dto.board.DetailDto;
-import com.example.ppoddolog.web.dto.board.ListDto;
+import com.example.ppoddolog.web.dto.board.DetailBoardDto;
+import com.example.ppoddolog.web.dto.board.BoardListDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ public class BoardService {
 
     private final BoardDao boardDao;
 
-    public List<ListDto> 게시글목록보기() {
+    public List<BoardListDto> 게시글목록보기() {
         return boardDao.findAll();
     }
 
@@ -29,7 +29,7 @@ public class BoardService {
         boardDao.insert(saveDto.toEntity());
     }
 
-    public DetailDto 상세보기(Integer boardId) {
+    public DetailBoardDto 상세보기(Integer boardId) {
         return boardDao.findByIdDetail(boardId);
     }
 

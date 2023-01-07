@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
-import com.example.ppoddolog.web.dto.admin.ListDto;
+import com.example.ppoddolog.web.dto.admin.UsersListDto;
+import com.example.ppoddolog.web.dto.users.DetailUsersDto;
 
 public interface UsersDao {
 
     public Users findById(Integer usersId);
+
+    // 유저상세보기
+    public DetailUsersDto findByIdDetail(Integer usersId);
 
     // 로그인 - username, password로 select
     public Users findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
@@ -25,7 +29,13 @@ public interface UsersDao {
     public void delete(Users users);
 
     // 관리자 ----------------------------------------------//
-    public List<ListDto> findAllActive();
+    public List<UsersListDto> findAllActive();
 
-    public List<ListDto> findAllInactive();
+    public List<UsersListDto> findAllStop();
+
+    public List<UsersListDto> findAllInactive();
+
+    public void stop(Users users);
+
+    public void active(Users users);
 }

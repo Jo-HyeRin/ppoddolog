@@ -20,20 +20,34 @@
 		SELECT * FROM users WHERE users_id=#{usersId}
 	</select>
 
+	<select id="findByIdDetail"
+		resultType="com.example.ppoddolog.web.dto.users.DetailUsersDto">
+		SELECT users_id, username, realname, nickname, email, address, phone, photo, state
+		FROM users 
+		WHERE users_id=#{usersId}
+	</select>
+
 	<select id="findAll"
 		resultType="com.example.ppoddolog.domain.users.Users">
 		SELECT * FROM users
 	</select>
 
 	<select id="findAllActive"
-		resultType="com.example.ppoddolog.web.dto.admin.ListDto">
+		resultType="com.example.ppoddolog.web.dto.admin.UsersListDto">
 		SELECT ROW_NUMBER() OVER (ORDER BY users_id ASC) AS row, users_id, username, realname, nickname, DATE_FORMAT(created_at, '%Y년 %m월 %d일')date
 		FROM users
 		WHERE state = "active"
 	</select>
 
+	<select id="findAllStop"
+		resultType="com.example.ppoddolog.web.dto.admin.UsersListDto">
+		SELECT ROW_NUMBER() OVER (ORDER BY users_id ASC) AS row, users_id, username, realname, nickname, DATE_FORMAT(updated_at, '%Y년 %m월 %d일')date
+		FROM users
+		WHERE state = "stop"
+	</select>
+
 	<select id="findAllInactive"
-		resultType="com.example.ppoddolog.web.dto.admin.ListDto">
+		resultType="com.example.ppoddolog.web.dto.admin.UsersListDto">
 		SELECT ROW_NUMBER() OVER (ORDER BY users_id ASC) AS row, users_id, username, realname, nickname, DATE_FORMAT(updated_at, '%Y년 %m월 %d일')date
 		FROM users
 		WHERE state = "inactive"
@@ -53,6 +67,18 @@
 	<update id="leave">
 		UPDATE users
 		SET state = "inactive"
+		WHERE users_id=#{usersId}
+	</update>
+
+	<update id="stop">
+		UPDATE users
+		SET state = "stop"
+		WHERE users_id=#{usersId}
+	</update>
+
+	<update id="active">
+		UPDATE users
+		SET state = "active"
 		WHERE users_id=#{usersId}
 	</update>
 

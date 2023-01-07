@@ -20,7 +20,7 @@
                         <td>${usersList.usersId}</td>
                         <td>
                             <div id="username" class="container p-4 my-4 border">
-                                <a href="/admin/usersDetail/${usersList.usersId}">
+                                <a href="/admin/detailUsers/${usersList.usersId}">
                                     ${usersList.username}</a>
                             </div>
                         </td>

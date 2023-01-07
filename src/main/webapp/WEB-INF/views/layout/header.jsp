@@ -29,7 +29,13 @@
                                         <a href="/admin/activeUsersList" style="color: #ffffff;">활동회원목록</a>
                                     </li>
                                     <li class="nav-link">
+                                        <a href="/admin/stopUsersList" style="color: #ffffff;">정지회원목록</a>
+                                    </li>
+                                    <li class="nav-link">
                                         <a href="/admin/leaveUsersList" style="color: #ffffff;">탈퇴회원목록</a>
+                                    </li>
+                                    <li class="nav-link">
+                                        <a href="/logout" onclick="disconnect()" style="color: #ffffff;">로그아웃</a>
                                     </li>
                                 </c:when>
                                 <c:otherwise>

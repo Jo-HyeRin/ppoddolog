@@ -21,8 +21,8 @@ import com.example.ppoddolog.service.CategoryService;
 import com.example.ppoddolog.web.dto.ResponseDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.SaveDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.UpdateDto;
-import com.example.ppoddolog.web.dto.board.DetailDto;
-import com.example.ppoddolog.web.dto.board.ListDto;
+import com.example.ppoddolog.web.dto.board.DetailBoardDto;
+import com.example.ppoddolog.web.dto.board.BoardListDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,7 +36,7 @@ public class BoardController {
 
     @GetMapping("/board/list")
     public String boardList(Model model) {
-        List<ListDto> boardList = boardService.게시글목록보기();
+        List<BoardListDto> boardList = boardService.게시글목록보기();
         model.addAttribute("boardList", boardList);
         return "/board/list";
     }
@@ -56,14 +56,14 @@ public class BoardController {
 
     @GetMapping("/board/users/{usersId}/detail/{boardId}")
     public String detailBoard(@PathVariable Integer usersId, @PathVariable Integer boardId, Model model) {
-        DetailDto boardPS = boardService.상세보기(boardId);
+        DetailBoardDto boardPS = boardService.상세보기(boardId);
         model.addAttribute("boardPS", boardPS);
         return "/board/detail";
     }
 
     @GetMapping("/board/updateForm/{boardId}")
     public String updateForm(@PathVariable Integer boardId, Model model) {
-        DetailDto boardPS = boardService.상세보기(boardId);
+        DetailBoardDto boardPS = boardService.상세보기(boardId);
         model.addAttribute("boardPS", boardPS);
         List<Category> categoryList = categoryService.카테고리목록();
         model.addAttribute("categoryList", categoryList);

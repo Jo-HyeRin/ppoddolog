@@ -4,7 +4,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +14,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.service.UsersService;
 import com.example.ppoddolog.web.dto.ResponseDto;
-import com.example.ppoddolog.web.dto.UsersReqDto.JoinDto;
-import com.example.ppoddolog.web.dto.UsersReqDto.LoginDto;
-import com.example.ppoddolog.web.dto.UsersReqDto.UpdateDto;
-import com.example.ppoddolog.web.dto.UsersRespDto.SignedDto;
+import com.example.ppoddolog.web.dto.users.DetailUsersDto;
+import com.example.ppoddolog.web.dto.users.SignedDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.JoinDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.LoginDto;
+import com.example.ppoddolog.web.dto.users.UsersReqDto.UpdateDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -68,14 +68,14 @@ public class UsersController {
 
     @GetMapping("/users/{usersId}/detail")
     public String detailUsers(@PathVariable Integer usersId, Model model) {
-        Users usersPS = usersService.상세보기(usersId);
+        DetailUsersDto usersPS = usersService.상세보기(usersId);
         model.addAttribute("usersPS", usersPS);
         return "/users/detail";
     }
 
     @GetMapping("/users/{usersId}/update")
     public String updateForm(@PathVariable Integer usersId, Model model) {
-        Users usersPS = usersService.상세보기(usersId);
+        DetailUsersDto usersPS = usersService.상세보기(usersId);
         model.addAttribute("usersPS", usersPS);
         return "/users/update";
     }
@@ -88,7 +88,7 @@ public class UsersController {
 
     @PutMapping("/users/{usersId}/leave")
     public @ResponseBody ResponseDto<?> leaveUsers(@PathVariable Integer usersId) {
-        Users usersPS = usersService.유저탈퇴(usersId);
+        Users usersPS = usersService.유저비활성화(usersId);
         session.invalidate();
         return new ResponseDto<>(1, "유저탈퇴 성공", null);
     }
