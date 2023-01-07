@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="../layout/header.jsp" %>
 
+        <input id="usersId" type="hidden" value="${principal.usersId}" />
         <input id="boardId" type="hidden" value="${boardPS.boardId}" />
 
         <h2 style="text-align: center">게시글 상세보기</h2>
@@ -32,14 +33,41 @@
         </form>
 
         <div class="d-grid gap-1 col-2 mx-auto">
-            <button id="btnUpdate" type="button" class="btn btn-primary">게시글수정</button>
+            <button id="btnUpdateBoard" type="button" class="btn btn-primary">게시글수정</button>
+        </div>
+        <br />
+        <div class="d-grid gap-1 col-2 mx-auto">
+            <button id="btnDeleteBoard" type="button" class="btn btn-primary">게시글삭제</button>
         </div>
 
         <script>
-            $("#btnUpdate").click(() => {
+            $("#btnUpdateBoard").click(() => {
                 let boardId = $("#boardId").val();
                 location.href = "/board/updateForm/" + boardId;
             });
+
+            $("#btnDeleteBoard").click(() => {
+                deleteBoard();
+            });
+
+            function deleteBoard() {
+                let usersId = $("#usersId").val();
+                let boardId = $("#boardId").val();
+
+                $.ajax("/board/users/" + usersId + "/delete/" + boardId, {
+                    type: "DELETE",
+                    dataType: "json",
+                }).done((res) => {
+                    if (res.code == 1) {
+                        alert("게시글 삭제 성공");
+                        location.href = "/board/list";
+                    } else {
+                        alert(res.msg);
+                        return false;
+                    }
+                });
+            }
+
         </script>
 
 

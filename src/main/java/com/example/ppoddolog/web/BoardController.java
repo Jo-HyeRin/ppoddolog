@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -48,13 +49,13 @@ public class BoardController {
     }
 
     @PostMapping("/board/users/{usersId}/save")
-    public @ResponseBody ResponseDto<?> save(@PathVariable Integer usersId, @RequestBody SaveDto saveDto) {
+    public @ResponseBody ResponseDto<?> saveBoard(@PathVariable Integer usersId, @RequestBody SaveDto saveDto) {
         boardService.게시글등록(usersId, saveDto);
         return new ResponseDto<>(1, "게시글 등록 성공", null);
     }
 
     @GetMapping("/board/users/{usersId}/detail/{boardId}")
-    public String detail(@PathVariable Integer usersId, @PathVariable Integer boardId, Model model) {
+    public String detailBoard(@PathVariable Integer usersId, @PathVariable Integer boardId, Model model) {
         DetailDto boardPS = boardService.상세보기(boardId);
         model.addAttribute("boardPS", boardPS);
         return "/board/detail";
@@ -70,9 +71,16 @@ public class BoardController {
     }
 
     @PutMapping("/board/users/{usersId}/update/{boardId}")
-    public @ResponseBody ResponseDto<?> update(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId,
+    public @ResponseBody ResponseDto<?> updateBoard(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId,
             @PathVariable Integer boardId) {
         Board boardPS = boardService.게시글수정(updateDto, boardId);
         return new ResponseDto<>(1, "게시글 수정 성공", null);
+    }
+
+    @DeleteMapping("/board/users/{usersId}/delete/{boardId}")
+    public @ResponseBody ResponseDto<?> deleteBoard(@PathVariable Integer usersId,
+            @PathVariable Integer boardId) {
+        boardService.게시글삭제(boardId);
+        return new ResponseDto<>(1, "게시글 삭제 성공", null);
     }
 }

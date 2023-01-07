@@ -40,4 +40,9 @@ public class BoardService {
         boardDao.update(boardPS);
         return boardPS;
     }
+
+    public void 게시글삭제(Integer boardId) {
+        Board boardPS = boardDao.findById(boardId);
+        boardDao.delete(boardPS);
+    }
 }
