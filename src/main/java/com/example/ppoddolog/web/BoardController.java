@@ -18,7 +18,9 @@ import com.example.ppoddolog.domain.board.Board;
 import com.example.ppoddolog.domain.category.Category;
 import com.example.ppoddolog.service.BoardService;
 import com.example.ppoddolog.service.CategoryService;
+import com.example.ppoddolog.web.dto.PagingDto;
 import com.example.ppoddolog.web.dto.ResponseDto;
+import com.example.ppoddolog.web.dto.board.BoardReqDto.ListReqDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.SaveDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.UpdateDto;
 import com.example.ppoddolog.web.dto.board.DetailBoardDto;
@@ -35,10 +37,58 @@ public class BoardController {
     private final HttpSession session;
 
     @GetMapping("/board/list")
-    public String boardList(Model model) {
-        List<BoardListDto> boardList = boardService.게시글목록보기();
-        model.addAttribute("boardList", boardList);
+    public String boardAll(Integer page, String keyword, Model model) {
+        // 선택할 카테고리 목록 뷰 전달
+        List<Category> categoryList = categoryService.카테고리목록();
+        model.addAttribute("categoryList", categoryList);
+
+        if (page == null)
+            page = 0;
+        int startNum = page * 5;
+
+        if (keyword == null || keyword.isEmpty()) {
+            List<BoardListDto> boardList = boardService.게시글전체목록보기(startNum);
+            PagingDto paging = boardService.게시글페이징(page, null);
+            paging.makeBlockInfo(keyword);
+            model.addAttribute("boardList", boardList);
+            model.addAttribute("paging", paging);
+        } else {
+            List<BoardListDto> boardList = boardService.검색게시글전체목록보기(startNum, keyword);
+            PagingDto paging = boardService.게시글페이징(page, keyword);
+            paging.makeBlockInfo(keyword);
+            model.addAttribute("boardList", boardList);
+            model.addAttribute("paging", paging);
+        }
         return "/board/list";
+    }
+
+    @GetMapping("/board/list/{categoryId}")
+    public @ResponseBody ResponseDto<?> boardList(@PathVariable Integer categoryId, Integer page, String keyword,
+            Model model) {
+        // 선택할 카테고리 목록 뷰 전달
+        List<Category> categoryList = categoryService.카테고리목록();
+        model.addAttribute("categoryList", categoryList);
+
+        if (page == null)
+            page = 0;
+        int startNum = page * 5;
+
+        if (keyword == null || keyword.isEmpty()) {
+            List<BoardListDto> boardList = boardService.게시글목록보기(startNum, categoryId);
+            PagingDto paging = boardService.게시글페이징(page, null);
+            paging.makeBlockInfo(keyword);
+            model.addAttribute("boardList", boardList);
+            model.addAttribute("paging", paging);
+        } else {
+            List<BoardListDto> boardList = boardService.검색게시글목록보기(startNum, keyword, categoryId);
+            PagingDto paging = boardService.게시글페이징(page, keyword);
+            paging.makeBlockInfo(keyword);
+            model.addAttribute("boardList", boardList);
+            model.addAttribute("paging", paging);
+        }
+
+        return new ResponseDto<>(1, "게시글 목록보기 성공", null);
+
     }
 
     @GetMapping("/board/saveForm")
@@ -56,14 +106,14 @@ public class BoardController {
 
     @GetMapping("/board/users/{usersId}/detail/{boardId}")
     public String detailBoard(@PathVariable Integer usersId, @PathVariable Integer boardId, Model model) {
-        DetailBoardDto boardPS = boardService.상세보기(boardId);
+        DetailBoardDto boardPS = boardService.게시글상세보기(boardId);
         model.addAttribute("boardPS", boardPS);
         return "/board/detail";
     }
 
     @GetMapping("/board/updateForm/{boardId}")
     public String updateForm(@PathVariable Integer boardId, Model model) {
-        DetailBoardDto boardPS = boardService.상세보기(boardId);
+        DetailBoardDto boardPS = boardService.게시글상세보기(boardId);
         model.addAttribute("boardPS", boardPS);
         List<Category> categoryList = categoryService.카테고리목록();
         model.addAttribute("categoryList", categoryList);

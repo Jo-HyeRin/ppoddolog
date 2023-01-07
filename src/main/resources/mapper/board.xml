@@ -17,11 +17,59 @@
 		WHERE board_id=#{boardId}
 	</select>
 
+	<select id="boardPaging"
+		resultType="com.example.ppoddolog.web.dto.PagingDto">
+		SELECT totalCount, totalPage, currentPage,
+		if(currentPage=0, 1, 0)
+		FIRST,
+		if(currentPage=totalPage-1, 1, 0) LAST
+		FROM(
+		SELECT count(*)
+		totalCount,
+		ceil(count(*)/5) totalPage,
+		#{page} currentPage,
+		0 first,
+		0 last
+		FROM board
+		<if test="keyword != null">
+			WHERE title like CONCAT('%', #{keyword}, '%')
+		</if>
+		) paging
+	</select>	
+
 	<select id="findAll"
 		resultType="com.example.ppoddolog.web.dto.board.BoardListDto">
 		SELECT ROW_NUMBER() OVER (ORDER BY b.board_id ASC) AS row, b.title, u.nickname, DATE_FORMAT(b.created_at, '%Y년 %m월 %d일')date, b.board_id, u.users_id
 		FROM board b
-		JOIN users u ON b.users_id = u.users_id;
+		JOIN users u ON b.users_id = u.users_id
+		OFFSET #{startNum} ROWS FETCH NEXT 5 ROWS ONLY
+	</select>
+
+	<select id="findAllSearch"
+		resultType="com.example.ppoddolog.web.dto.board.BoardListDto">
+		SELECT ROW_NUMBER() OVER (ORDER BY b.board_id ASC) AS row, b.title, u.nickname, DATE_FORMAT(b.created_at, '%Y년 %m월 %d일')date, b.board_id, u.users_id
+		FROM board b
+		JOIN users u ON b.users_id = u.users_id
+		WHERE b.title like CONCAT('%', #{keyword}, '%')
+		OFFSET #{startNum} ROWS FETCH NEXT 5 ROWS ONLY
+	</select>
+
+	<select id="findAllBoard"
+		resultType="com.example.ppoddolog.web.dto.board.BoardListDto">
+		SELECT ROW_NUMBER() OVER (ORDER BY b.board_id ASC) AS row, b.title, u.nickname, DATE_FORMAT(b.created_at, '%Y년 %m월 %d일')date, b.board_id, u.users_id
+		FROM board b
+		INNER JOIN users u ON b.users_id = u.users_id		
+		WHERE b.category_id = #{categoryId}
+		OFFSET #{startNum} ROWS FETCH NEXT 5 ROWS ONLY
+	</select>	
+
+	<select id="findAllBoardSearch"
+		resultType="com.example.ppoddolog.web.dto.board.BoardListDto">
+		SELECT ROW_NUMBER() OVER (ORDER BY b.board_id ASC) AS row, b.title, u.nickname, DATE_FORMAT(b.created_at, '%Y년 %m월 %d일')date, b.board_id, u.users_id
+		FROM board b
+		INNER JOIN users u ON b.users_id = u.users_id	
+		WHERE b.category_id = #{categoryId} AND b.title like CONCAT('%', #{keyword}, '%')
+		OFFSET #{startNum} ROWS FETCH NEXT 5 ROWS ONLY
 	</select>
 
 	<insert id="insert">

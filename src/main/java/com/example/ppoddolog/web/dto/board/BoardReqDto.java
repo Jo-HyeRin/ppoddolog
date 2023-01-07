@@ -29,4 +29,10 @@ public class BoardReqDto {
         private Integer categoryId;
     }
 
+    @Setter
+    @Getter
+    public static class ListReqDto {
+        private Integer categoryId;
+    }
+
 }
