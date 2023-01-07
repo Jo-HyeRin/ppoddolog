@@ -11,6 +11,12 @@
                     ◆비밀번호 <input id="password" type="password" class="form-control" placeholder="비밀번호를 입력해주세요">
                 </div>
                 <div class="mb-3">
+                    ◆비밀번호확인
+                    <span id="passwordCheck" style="visibility: hidden; color: tomato;">
+                        -----비밀번호가 같지 않습니다! </span>
+                    <input id="passwordConfirm" type="password" class="form-control" placeholder="비밀번호를 한 번 더 입력해주세요">
+                </div>
+                <div class="mb-3">
                     ◆이름 <input id="realname" type="text" class="form-control" placeholder="이름을 입력해주세요">
                 </div>
                 <div class="mb-3">
@@ -39,6 +45,19 @@
         </div>
 
         <script>
+            // 패스워드 일치 여부 체크
+            $("#passwordConfirm").keyup((event) => {
+                event.preventDefault();
+                if ($("#password").val() != $("#passwordConfirm").val()) {
+                    $("#passwordCheck").css("visibility", "visible");
+                    $("#btnSave").attr(`disabled`, true);
+                } else {
+                    $("#passwordCheck").css("visibility", "hidden");
+                    $("#btnSave").removeAttr(`disabled`);
+                }
+            });
+
+            // 회원가입
             function join() {
                 let data = {
                     username: $("#username").val(),
