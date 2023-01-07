@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.domain.users.UsersDao;
+import com.example.ppoddolog.util.SHA256;
 import com.example.ppoddolog.web.dto.admin.UsersListDto;
 import com.example.ppoddolog.web.dto.users.DetailUsersDto;
 import com.example.ppoddolog.web.dto.users.SignedDto;
@@ -21,9 +22,12 @@ import lombok.RequiredArgsConstructor;
 public class UsersService {
 
     private final UsersDao usersDao;
+    private final SHA256 sha256;
 
     @Transactional
     public void 회원가입(JoinDto joinDto) {
+        String encPassword = sha256.encrypt(joinDto.getPassword());
+        joinDto.setPassword(encPassword);
         usersDao.insert(joinDto.toEntity());
     }
 
