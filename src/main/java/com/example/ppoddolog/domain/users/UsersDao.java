@@ -22,7 +22,16 @@ public interface UsersDao {
     public Users findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
     // 아이디 중복체크
-    public Integer findByUsername(String loginId);
+    public Users findByUsername(String username);
+
+    // 닉네임 중복체크
+    public Users findByNickname(String nickname);
+
+    // 이메일 중복체크
+    public Users findByEmail(String email);
+
+    // 연락처 중복체크
+    public Users findByPhone(String phone);
 
     public List<Users> findAll();
 

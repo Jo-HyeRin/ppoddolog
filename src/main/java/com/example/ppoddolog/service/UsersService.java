@@ -35,9 +35,43 @@ public class UsersService {
     }
 
     // 아이디 중복체크
-    public Integer 유저네임중복체크(String username) {
-        Integer checkUsersId = usersDao.findByUsername(username);
-        return checkUsersId;
+    public Boolean 유저네임중복체크(String username) {
+        Users usersPS = usersDao.findByUsername(username);
+        if (usersPS == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // 닉네임 중복체크
+    public Boolean 닉네임중복체크(String nickname) {
+        Users usersPS = usersDao.findByNickname(nickname);
+        if (usersPS == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // 이메일 중복체크
+    public Boolean 이메일중복체크(String email) {
+        Users usersPS = usersDao.findByEmail(email);
+        if (usersPS == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // 연락처 중복체크
+    public Boolean 연락처중복체크(String phone) {
+        Users usersPS = usersDao.findByPhone(phone);
+        if (usersPS == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     @Transactional

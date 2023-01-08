@@ -17,8 +17,20 @@
 		WHERE users_id= #{usersId}
 	</select>
 
-	<select id="findByUsername" resultType="Integer">
+	<select id="findByUsername" resultType="com.example.ppoddolog.domain.users.Users">
 		SELECT users_id FROM users WHERE username = #{username}
+	</select>
+
+	<select id="findByNickname" resultType="com.example.ppoddolog.domain.users.Users">
+		SELECT users_id FROM users WHERE nickname = #{nickname}
+	</select>
+
+	<select id="findByEmail" resultType="com.example.ppoddolog.domain.users.Users">
+		SELECT users_id FROM users WHERE email = #{email}
+	</select>
+
+	<select id="findByPhone" resultType="com.example.ppoddolog.domain.users.Users">
+		SELECT users_id FROM users WHERE phone = #{phone}
 	</select>
 
 	<insert id="insert">
