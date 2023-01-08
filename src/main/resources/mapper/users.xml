@@ -17,6 +17,10 @@
 		WHERE users_id= #{usersId}
 	</select>
 
+	<select id="findByUsername" resultType="Integer">
+		SELECT users_id FROM users WHERE username = #{username}
+	</select>
+
 	<insert id="insert">
 		INSERT
 		INTO users(username, password, realname, nickname, email, address, phone, photo, role, state, updated_at, created_at)

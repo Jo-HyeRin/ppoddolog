@@ -6,6 +6,7 @@
             <form>
                 <div class="mb-3 mt-3">
                     ◆아이디 <input id="username" type="text" class="form-control" placeholder="아이디를 입력해주세요.">
+                    <button id="btnUsernameSameCheck" class="btn btn-warning" type="button">아이디 중복체크</button>
                 </div>
                 <div class="mb-3">
                     ◆비밀번호 <input id="password" type="password" class="form-control" placeholder="비밀번호를 입력해주세요">
@@ -50,7 +51,7 @@
             <div class="mb-5"></div>
 
             <div class="d-grid gap-1 col-2 mx-auto">
-                <button onclick="join()" type="submit" class="btn btn-primary">회원가입하기</button>
+                <button id="btnJoin" type="button" class="btn btn-primary">회원가입하기</button>
             </div>
 
         </div>
@@ -106,7 +107,49 @@
                 reader.readAsDataURL(event.target.files[0]);
             }
 
+            // 아이디 중복체크
+            let UsernameSameCheck = {
+                username: null,
+                isCheck: false
+            };
+
+            $("#btnUsernameSameCheck").click(() => {
+                if ($("#username").val() == "") {
+                    alert("아이디를 입력하여 주세요");
+                    return;
+                } else {
+                    let username = $("#username").val();
+                    $.ajax("/checkUsername/" + username, {
+                        type: "GET",
+                        dataType: "JSON",
+                        error: function (data, status, error) {
+                            alert(data.responseText);
+                        },
+                    }).done((res) => {
+                        if (res.code == 1) {
+                            alert(res.msg);
+                            UsernameSameCheck.username = $("#username").val();
+                            UsernameSameCheck.isCheck = true;
+                        } else {
+                            alert(res.msg);
+                            UsernameSameCheck.isCheck = false;
+                        }
+                    });
+                }
+            });
+
             // 회원가입
+            $("#btnJoin").click(() => {
+                if (UsernameSameCheck.isCheck == false) {
+                    alert("아이디 중복 체크를 해주세요");
+                    return;
+                } else if (UsernameSameCheck.username != $("#username").val()) {
+                    alert("가입을 진행할 유저의 아이디가 다릅니다. 현재 진행 중인 아이디 : " + UsernameSameCheck.username);
+                } else {
+                    join();
+                }
+            });
+
             function join() {
                 let data = {
                     username: $("#username").val(),

@@ -21,6 +21,9 @@ public interface UsersDao {
     // 로그인 - username, password로 select
     public Users findByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
 
+    // 아이디 중복체크
+    public Integer findByUsername(String loginId);
+
     public List<Users> findAll();
 
     public void insert(Users users);

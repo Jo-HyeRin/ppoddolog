@@ -34,6 +34,12 @@ public class UsersService {
         return usersDao.findByAddress(usersId);
     }
 
+    // 아이디 중복체크
+    public Integer 유저네임중복체크(String username) {
+        Integer checkUsersId = usersDao.findByUsername(username);
+        return checkUsersId;
+    }
+
     @Transactional
     public void 회원가입(JoinDto joinDto) {
         String encPassword = sha256.encrypt(joinDto.getPassword());

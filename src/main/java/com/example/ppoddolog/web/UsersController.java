@@ -46,6 +46,20 @@ public class UsersController {
         return "main";
     }
 
+    // 아이디 중복체크
+    @GetMapping("/checkUsername/{username}")
+    public @ResponseBody ResponseEntity<?> usersIdSameCheck(@PathVariable String username) {
+        if (username == null || username == "") {
+            throw new CustomApiException("아이디를 입력하여 주세요", HttpStatus.BAD_REQUEST);
+        }
+        Integer checkUsersId = usersService.유저네임중복체크(username);
+        if (checkUsersId != null) {
+            throw new CustomApiException("중복입니다. 다른 아이디 입력하세요.", HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(new ResponseDto<>(1, "중복 없음 사용하셔도 좋습니다.", HttpStatus.OK), HttpStatus.OK);
+        }
+    }
+
     @GetMapping("/joinForm")
     public String joinForm() {
         return "/users/joinForm";
