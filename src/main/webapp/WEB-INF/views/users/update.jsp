@@ -26,9 +26,17 @@
                             placeholder="${usersPS.email}">
                     </div>
                     <br />
-                    <div class="mb-3 mt-3">
-                        <h3>◆주소</h3><input id="address" type="text" value="${usersPS.address}" class="form-control"
-                            placeholder="${usersPS.address}">
+                    <div class="mb-3">
+                        ◆주소
+                        <input id="postcode" type="text" placeholder="${usersAddress.zipCode}"
+                            value="${usersAddress.zipCode}" onclick="findAddress()">
+                        <button id="btnAddress" type="button" class="btn btn-primary"
+                            onclick="findAddress()">우편번호찾기</button>
+                        <br>
+                        <input id="addr" type="text" placeholder="${usersAddress.roadName}"
+                            value="${usersAddress.roadName}" style="width: 620px;" readonly>
+                        <input id="detailAddress" type="text" placeholder="${usersAddress.detailAddress}"
+                            value="${usersAddress.detailAddress}" style="width: 620px;">
                     </div>
                     <br />
                     <div class="mb-3 mt-3">
@@ -53,6 +61,27 @@
         </div>
 
         <script>
+            // 주소 불러오기
+            function findAddress() {
+                new daum.Postcode({
+                    oncomplete: function (data) {
+                        // 검색결과 항목을 선택했을때 실행할 코드
+                        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가짐
+
+                        let roadAddr = data.roadAddress; // 도로명 주소 변수
+                        let jibunAddr = data.jibunAddress; // 지번 주소 변수
+
+                        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                        document.getElementById('postcode').value = data.zonecode;
+                        if (roadAddr !== '') {
+                            document.getElementById("addr").value = roadAddr;
+                        } else if (jibunAddr !== '') {
+                            document.getElementById("addr").value = jibunAddr;
+                        }
+                    }
+                }).open();
+            }
+
             $("#btnUpdate").click(() => {
                 updateUsers();
             });
@@ -63,7 +92,7 @@
                     password: $("#password").val(),
                     nickname: $("#nickname").val(),
                     email: $("#email").val(),
-                    address: $("#address").val(),
+                    address: $("#postcode").val() + "," + $("#addr").val() + "," + $("#detailAddress").val(),
                     phone: $("#phone").val(),
                     photo: $("#photo").val()
                 };
@@ -88,5 +117,7 @@
                 });
             }
         </script>
+
+        <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
         <%@ include file="../layout/footer.jsp" %>

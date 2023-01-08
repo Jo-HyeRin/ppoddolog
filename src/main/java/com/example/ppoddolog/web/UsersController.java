@@ -1,5 +1,6 @@
 package com.example.ppoddolog.web;
 
+import javax.mail.Address;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -92,6 +93,8 @@ public class UsersController {
             throw new CustomException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
         }
         // 본인 정보 뷰 전달
+        AddressDto usersAddress = usersService.주소정보(usersId);
+        model.addAttribute("usersAddress", usersAddress);
         DetailUsersDto usersPS = usersService.상세보기(usersId);
         model.addAttribute("usersPS", usersPS);
         return "/users/update";
