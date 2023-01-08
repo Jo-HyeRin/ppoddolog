@@ -5,9 +5,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.example.ppoddolog.web.dto.admin.UsersListDto;
+import com.example.ppoddolog.web.dto.users.AddressDto;
 import com.example.ppoddolog.web.dto.users.DetailUsersDto;
 
 public interface UsersDao {
+
+    // 주소 정보 받기
+    public AddressDto findByAddress(Integer usersId);
 
     public Users findById(Integer usersId);
 

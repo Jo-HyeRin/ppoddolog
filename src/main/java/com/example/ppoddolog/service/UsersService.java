@@ -12,6 +12,7 @@ import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.domain.users.UsersDao;
 import com.example.ppoddolog.util.SHA256;
 import com.example.ppoddolog.web.dto.admin.UsersListDto;
+import com.example.ppoddolog.web.dto.users.AddressDto;
 import com.example.ppoddolog.web.dto.users.DetailUsersDto;
 import com.example.ppoddolog.web.dto.users.SignedDto;
 import com.example.ppoddolog.web.dto.users.UsersReqDto.JoinDto;
@@ -27,6 +28,11 @@ public class UsersService {
 
     private final UsersDao usersDao;
     private final SHA256 sha256;
+
+    // 주소 정보 받기
+    public AddressDto 주소정보(Integer usersId) {
+        return usersDao.findByAddress(usersId);
+    }
 
     @Transactional
     public void 회원가입(JoinDto joinDto) {

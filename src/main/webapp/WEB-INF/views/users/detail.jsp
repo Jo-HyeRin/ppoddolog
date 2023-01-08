@@ -16,7 +16,10 @@
                     <br />
                     <div id="email">${usersPS.email}</div>
                     <br />
-                    <div id="address">${usersPS.address}</div>
+                    <div class="mb-3">
+                        ◆주소 : <input id="content" type="text" value="${usersPS.address}" class="form-control"
+                            placeholder=${usersPS.address} readonly>
+                    </div>
                     <br />
                     <div id="phone">${usersPS.phone}</div>
                     <br />

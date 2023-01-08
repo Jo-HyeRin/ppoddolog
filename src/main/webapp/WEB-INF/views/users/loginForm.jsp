@@ -27,7 +27,7 @@
                 let loginData = {
                     username: $("#username").val(),
                     password: $("#password").val()
-                }
+                };
                 login(loginData);
             });
 
@@ -54,7 +54,6 @@
             }
 
             $("#btnJoin").click(() => {
-                alert(res.msg);
                 location.href = "/joinForm";
             });
 
