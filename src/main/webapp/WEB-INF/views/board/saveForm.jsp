@@ -14,6 +14,14 @@
             <div class="mb-3">
                 ◆ 게시글 제목 <input id="title" type="text" class="form-control" placeholder="제목을 입력해주세요">
             </div>
+            <br />
+            <div class="mb-3">◆사진</div>
+            <div style="width: 400px;">
+                <div id="imageContainer" class="form-group">
+                    <input type="file" id="file" accept="image/*" onchange="setThumbnail(event)">
+                </div>
+            </div>
+            <br />
             <div class="mb-3">
                 ◆ 게시글 내용 <input id="content" type="text" class="form-control" placeholder="내용을 입력해주세요">
             </div>
@@ -26,6 +34,23 @@
         </div>
 
         <script>
+            //사진 미리 보기
+            function setThumbnail(event) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    if (document.getElementById("newImg")) {
+                        document.getElementById("newImg").remove();
+                    }
+                    let img = document.createElement("img");
+                    let oldImg = $("#oldImg");
+                    oldImg.remove();
+                    img.setAttribute("src", event.target.result);
+                    img.setAttribute("id", "newImg");
+                    document.querySelector("#imageContainer").appendChild(img);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+
             $("#btnSave").click(() => {
                 let usersId = $("#usersId").val();
                 let data = {
@@ -34,21 +59,23 @@
                     categoryId: $("#categoryId").val(),
                     usersId: $("#usersId").val()
                 };
+                let formData = new FormData();
+                formData.append('file', $("#file")[0].files[0]);
+                formData.append('saveDto', new Blob([JSON.stringify(data)], { type: "application/json" }));
 
                 $.ajax("/board/users/" + usersId + "/save", {
                     type: "POST",
-                    dataType: "json",
-                    data: JSON.stringify(data),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
                     error: function (data, status, error) {
                         alert(data.responseText);
                     },
                 }).done((res) => {
                     if (res.code == 1) {
                         alert(res.msg);
-                        location.href = "/board/list";
+                        location.href = "/board/users/" + usersId + "/list";
                     } else {
                         alert(res.msg);
                         return false;

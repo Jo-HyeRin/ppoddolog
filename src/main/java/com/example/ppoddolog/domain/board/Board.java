@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 public class Board {
     private Integer boardId;
     private String title;
+    private String thumbnail;
     private String content;
     private Integer usersId;
     private Integer categoryId;
@@ -19,8 +20,9 @@ public class Board {
     private Timestamp createdAt;
 
     // 게시글등록
-    public Board(String title, String content, Integer usersId, Integer categoryId) {
+    public Board(String title, String thumbnail, String content, Integer usersId, Integer categoryId) {
         this.title = title;
+        this.thumbnail = thumbnail;
         this.content = content;
         this.usersId = usersId;
         this.categoryId = categoryId;
@@ -29,6 +31,7 @@ public class Board {
     // 게시글수정
     public void updateBoard(UpdateDto updateDto) {
         this.title = updateDto.getTitle();
+        this.thumbnail = updateDto.getThumbnail();
         this.content = updateDto.getContent();
         this.categoryId = updateDto.getCategoryId();
     }

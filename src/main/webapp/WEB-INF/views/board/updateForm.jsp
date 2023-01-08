@@ -15,6 +15,12 @@
                         placeholder=${boardPS.title}>
                 </div>
                 <br />
+                <div class="mb-3 mt-3">◆ thumbnail</div>
+                <input type="file" id="file" onchange="setThumbnail(event)" />
+                <div id="imageContainer">
+                    <img id="oldImg" src="/img/${boardPS.thumbnail}">
+                </div>
+                <br />
                 <div class="mb-3 mt-3">
                     <h3>◆ content </h3>
                     <input id="content" type="text" value="${boardPS.content}" class="form-control"
@@ -47,6 +53,23 @@
         </div>
 
         <script>
+            //사진 미리 보기
+            function setThumbnail(event) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    if (document.getElementById("newImg")) {
+                        document.getElementById("newImg").remove();
+                    }
+                    let img = document.createElement("img");
+                    let oldImg = $("#oldImg");
+                    oldImg.remove();
+                    img.setAttribute("src", event.target.result);
+                    img.setAttribute("id", "newImg");
+                    document.querySelector("#imageContainer").appendChild(img);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+
             $("#btnUpdate").click(() => {
                 updateBoard();
             });
@@ -59,14 +82,16 @@
                     content: $("#content").val(),
                     categoryId: $("#categoryId").val()
                 };
+                let formData = new FormData();
+                formData.append('file', $("#file")[0].files[0]);
+                formData.append('updateDto', new Blob([JSON.stringify(data)], { type: "application/json" }));
 
                 $.ajax("/board/users/" + usersId + "/update/" + boardId, {
                     type: "PUT",
-                    dataType: "json",
-                    data: JSON.stringify(data),
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
                     error: function (data, status, error) {
                         alert(data.responseText);
                     },

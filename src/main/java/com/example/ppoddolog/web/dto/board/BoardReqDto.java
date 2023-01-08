@@ -13,10 +13,11 @@ public class BoardReqDto {
         private Integer categoryId;
         private Integer usersId;
         private String title;
+        private String thumbnail;
         private String content;
 
         public Board toEntity() {
-            Board board = new Board(this.title, this.content, this.usersId, this.categoryId);
+            Board board = new Board(this.title, this.thumbnail, this.content, this.usersId, this.categoryId);
             return board;
         }
     }
@@ -25,6 +26,7 @@ public class BoardReqDto {
     @Getter
     public static class UpdateDto {
         private String title;
+        private String thumbnail;
         private String content;
         private Integer categoryId;
     }

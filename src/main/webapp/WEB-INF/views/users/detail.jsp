@@ -50,13 +50,11 @@
         <script>
             $("#btnUpdateUsers").click(() => {
                 let usersId = $("#usersId").val();
-                alert("회원수정 페이지로 이동합니다");
                 location.href = "/users/" + usersId + "/update";
             });
 
             $("#btnUpdatePassword").click(() => {
                 let usersId = $("#usersId").val();
-                alert("비밀번호변경 페이지로 이동합니다");
                 location.href = "/users/" + usersId + "/updatePassword";
             });
 

@@ -13,6 +13,11 @@
                     <h3>◆ title </h3> ${boardPS.title}
                 </div>
                 <br />
+                <div class="mb-3">◆사진</div>
+                <div class="right">
+                    <img src="/img/${boardPS.thumbnail}" style="width: 200px">
+                </div>
+                <br />
                 <div class="mb-3 mt-3" id="content">
                     <h3>◆ content </h3> ${boardPS.content}
                 </div>

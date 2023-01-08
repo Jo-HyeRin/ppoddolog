@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="../layout/header.jsp" %>
 
+        <input id="usersId" type="hidden" value="${principal.usersId}" />
+
         <br />
         <h2 style="text-align: center">게시글 목록</h2>
         <br />
@@ -74,6 +76,7 @@
         <script>
             $("#btnSave").click(() => {
                 let usersId = $("#usersId").val();
+                let boardId = $("#boardId").val();
                 location.href = "/board/users/" + usersId + "/saveForm";
             });
         </script>

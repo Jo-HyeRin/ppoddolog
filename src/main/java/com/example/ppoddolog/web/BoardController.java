@@ -1,6 +1,10 @@
 package com.example.ppoddolog.web;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,7 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ppoddolog.config.CustomApiException;
 import com.example.ppoddolog.config.CustomException;
@@ -114,12 +120,32 @@ public class BoardController {
     }
 
     @PostMapping("/board/users/{usersId}/save")
-    public @ResponseBody ResponseEntity<?> saveBoard(@PathVariable Integer usersId, @RequestBody SaveDto saveDto) {
+    public @ResponseBody ResponseEntity<?> saveBoard(@RequestPart("file") MultipartFile file,
+            @RequestPart("saveDto") SaveDto saveDto, @PathVariable Integer usersId) throws Exception {
         // 로그인유저 = 요청유저 확인
         SignedDto principal = (SignedDto) session.getAttribute("principal");
         if (principal.getUsersId() != usersId) {
             throw new CustomApiException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
         }
+        // 이미지 저장
+        int pos = file.getOriginalFilename().lastIndexOf('.');
+        String extension = file.getOriginalFilename().substring(pos + 1);
+        String filePath = "C:\\Users\\1\\Desktop\\workplace\\ppoddolog\\src\\main\\resources\\static\\img";
+        String imgSaveName = UUID.randomUUID().toString();
+        String imgName = imgSaveName + "." + extension;
+        File makeFileFolder = new File(filePath);
+        if (!makeFileFolder.exists()) {
+            if (!makeFileFolder.mkdir()) {
+                throw new Exception("File.mkdir():Fail.");
+            }
+        }
+        File dest = new File(filePath, imgName);
+        try {
+            Files.copy(file.getInputStream(), dest.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        saveDto.setThumbnail(imgName);
         // 게시글등록
         boardService.게시글등록(usersId, saveDto);
         return new ResponseEntity<>(new ResponseDto<>(1, "게시글등록 성공", HttpStatus.CREATED), HttpStatus.CREATED);
@@ -148,13 +174,33 @@ public class BoardController {
     }
 
     @PutMapping("/board/users/{usersId}/update/{boardId}")
-    public @ResponseBody ResponseEntity<?> updateBoard(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId,
-            @PathVariable Integer boardId) {
+    public @ResponseBody ResponseEntity<?> updateBoard(@RequestPart("file") MultipartFile file,
+            @RequestPart("updateDto") UpdateDto updateDto, @PathVariable Integer usersId,
+            @PathVariable Integer boardId) throws Exception {
         // 로그인유저 = 요청유저 확인
         SignedDto principal = (SignedDto) session.getAttribute("principal");
         if (principal.getUsersId() != usersId) {
             throw new CustomApiException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
         }
+        // 이미지 저장
+        int pos = file.getOriginalFilename().lastIndexOf('.');
+        String extension = file.getOriginalFilename().substring(pos + 1);
+        String filePath = "C:\\Users\\1\\Desktop\\workplace\\ppoddolog\\src\\main\\resources\\static\\img";
+        String imgSaveName = UUID.randomUUID().toString();
+        String imgName = imgSaveName + "." + extension;
+        File makeFileFolder = new File(filePath);
+        if (!makeFileFolder.exists()) {
+            if (!makeFileFolder.mkdir()) {
+                throw new Exception("File.mkdir():Fail.");
+            }
+        }
+        File dest = new File(filePath, imgName);
+        try {
+            Files.copy(file.getInputStream(), dest.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        updateDto.setThumbnail(imgName);
         // 게시글수정
         boardService.게시글수정(updateDto, boardId, usersId);
         return new ResponseEntity<>(new ResponseDto<>(1, "게시글수정 성공", HttpStatus.OK), HttpStatus.OK);
