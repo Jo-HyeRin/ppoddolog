@@ -44,9 +44,10 @@
                             placeholder="${usersPS.phone}">
                     </div>
                     <br />
-                    <div class="mb-3 mt-3">
-                        <h3>◆사진</h3><input id="photo" type="text" value="${usersPS.photo}" class="form-control"
-                            placeholder="${usersPS.photo}">
+                    <div class="mb-3">◆사진</div>
+                    <input type="file" id="file" onchange="setThumbnail(event)" />
+                    <div id="imageContainer">
+                        <img id="oldImg" src="/img/${usersPS.photo}">
                     </div>
                     <br />
                 </div>
@@ -82,6 +83,23 @@
                 }).open();
             }
 
+            //사진 미리 보기
+            function setThumbnail(event) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    if (document.getElementById("newImg")) {
+                        document.getElementById("newImg").remove();
+                    }
+                    let img = document.createElement("img");
+                    let oldImg = $("#oldImg");
+                    oldImg.remove();
+                    img.setAttribute("src", event.target.result);
+                    img.setAttribute("id", "newImg");
+                    document.querySelector("#imageContainer").appendChild(img);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+
             $("#btnUpdate").click(() => {
                 updateUsers();
             });
@@ -93,17 +111,18 @@
                     nickname: $("#nickname").val(),
                     email: $("#email").val(),
                     address: $("#postcode").val() + "," + $("#addr").val() + "," + $("#detailAddress").val(),
-                    phone: $("#phone").val(),
-                    photo: $("#photo").val()
+                    phone: $("#phone").val()
                 };
+                let formData = new FormData();
+                formData.append('file', $("#file")[0].files[0]);
+                formData.append('updateDto', new Blob([JSON.stringify(data)], { type: "application/json" }));
 
                 $.ajax("/users/" + usersId + "/update", {
                     type: "PUT",
-                    dataType: "json",
-                    data: JSON.stringify(data),
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
                     error: function (data, status, error) {
                         alert(data.responseText);
                     },

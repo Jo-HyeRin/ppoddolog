@@ -37,9 +37,14 @@
                 <div class="mb-3">
                     ◆전화번호<input id="phone" type="text" class="form-control" placeholder="전화번호 양식 : 000-000-0000">
                 </div>
-                <div class="mb-3">
-                    ◆사진 <input id="photo" type="text" class="form-control" placeholder="사진을 입력해주세요">
+                <div class="mb-3">◆사진</div>
+                <div style="width: 400px;">
+                    <div class="form-group">
+                        <input type="file" id="file" accept="image/*" onchange="setThumbnail(event)">
+                    </div>
+                    <div id="imageContainer"></div>
                 </div>
+
             </form>
 
             <div class="mb-5"></div>
@@ -84,6 +89,23 @@
                 }).open();
             }
 
+            //사진 미리 보기
+            function setThumbnail(event) {
+                let reader = new FileReader();
+                reader.onload = function (event) {
+                    if (document.getElementById("newImg")) {
+                        document.getElementById("newImg").remove();
+                    }
+                    let img = document.createElement("img");
+                    let oldImg = $("#oldImg");
+                    oldImg.remove();
+                    img.setAttribute("src", event.target.result);
+                    img.setAttribute("id", "newImg");
+                    document.querySelector("#imageContainer").appendChild(img);
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
+
             // 회원가입
             function join() {
                 let data = {
@@ -94,16 +116,17 @@
                     email: $("#email").val(),
                     address: $("#postcode").val() + "," + $("#addr").val() + "," + $("#detailAddress").val(),
                     phone: $("#phone").val(),
-                    photo: $("#photo").val(),
                 };
+                let formData = new FormData();
+                formData.append('file', $("#file")[0].files[0]);
+                formData.append('joinDto', new Blob([JSON.stringify(data)], { type: "application/json" }));
 
                 $.ajax("/join", {
                     type: "POST",
-                    dataType: "json",
-                    data: JSON.stringify(data),
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                    },
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    enctype: 'multipart/form-data',
                     error: function (data, status, error) {
                         alert(data.responseText);
                     },

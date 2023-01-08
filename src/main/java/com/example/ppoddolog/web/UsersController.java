@@ -1,6 +1,10 @@
 package com.example.ppoddolog.web;
 
-import javax.mail.Address;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.ppoddolog.config.CustomApiException;
 import com.example.ppoddolog.config.CustomException;
@@ -46,7 +52,26 @@ public class UsersController {
     }
 
     @PostMapping("/join")
-    public @ResponseBody ResponseEntity<?> join(@RequestBody JoinDto joinDto) {
+    public @ResponseBody ResponseEntity<?> join(@RequestPart("file") MultipartFile file,
+            @RequestPart("joinDto") JoinDto joinDto) throws Exception {
+        int pos = file.getOriginalFilename().lastIndexOf('.');
+        String extension = file.getOriginalFilename().substring(pos + 1);
+        String filePath = "C:\\Users\\1\\Desktop\\workplace\\ppoddolog\\src\\main\\resources\\static\\img";
+        String imgSaveName = UUID.randomUUID().toString();
+        String imgName = imgSaveName + "." + extension;
+        File makeFileFolder = new File(filePath);
+        if (!makeFileFolder.exists()) {
+            if (!makeFileFolder.mkdir()) {
+                throw new Exception("File.mkdir():Fail.");
+            }
+        }
+        File dest = new File(filePath, imgName);
+        try {
+            Files.copy(file.getInputStream(), dest.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        joinDto.setPhoto(imgName);
         usersService.회원가입(joinDto);
         return new ResponseEntity<>(new ResponseDto<>(1, "회원가입 성공", HttpStatus.CREATED), HttpStatus.CREATED);
     }
@@ -60,7 +85,7 @@ public class UsersController {
     public @ResponseBody ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
         SignedDto principal = usersService.로그인(loginDto);
         if (principal == null) {
-            return new ResponseEntity<>(new ResponseDto<>(-1, "로그인 실패", HttpStatus.FORBIDDEN), HttpStatus.FORBIDDEN);
+            throw new CustomApiException("로그인 실패", HttpStatus.FORBIDDEN);
         }
         session.setAttribute("principal", principal);
         return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", HttpStatus.OK), HttpStatus.OK);
@@ -101,13 +126,32 @@ public class UsersController {
     }
 
     @PutMapping("/users/{usersId}/update")
-    public @ResponseBody ResponseEntity<?> updateUsers(@RequestBody UpdateDto updateDto,
-            @PathVariable Integer usersId) {
+    public @ResponseBody ResponseEntity<?> updateUsers(@RequestPart("file") MultipartFile file,
+            @RequestPart("updateDto") UpdateDto updateDto, @PathVariable Integer usersId) throws Exception {
         // 로그인유저 = 요청유저 확인
         SignedDto principal = (SignedDto) session.getAttribute("principal");
         if (principal.getUsersId() != usersId) {
             throw new CustomApiException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
         }
+        // 이미지 저장
+        int pos = file.getOriginalFilename().lastIndexOf('.');
+        String extension = file.getOriginalFilename().substring(pos + 1);
+        String filePath = "C:\\Users\\1\\Desktop\\workplace\\ppoddolog\\src\\main\\resources\\static\\img";
+        String imgSaveName = UUID.randomUUID().toString();
+        String imgName = imgSaveName + "." + extension;
+        File makeFileFolder = new File(filePath);
+        if (!makeFileFolder.exists()) {
+            if (!makeFileFolder.mkdir()) {
+                throw new Exception("File.mkdir():Fail.");
+            }
+        }
+        File dest = new File(filePath, imgName);
+        try {
+            Files.copy(file.getInputStream(), dest.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        updateDto.setPhoto(imgName);
         // 유저수정
         usersService.유저수정(updateDto, usersId);
         return new ResponseEntity<>(new ResponseDto<>(1, "유저수정 성공", HttpStatus.OK), HttpStatus.OK);

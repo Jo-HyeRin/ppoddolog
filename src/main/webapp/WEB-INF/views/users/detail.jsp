@@ -16,15 +16,18 @@
                     <br />
                     <div id="email">${usersPS.email}</div>
                     <br />
-                    <div class="mb-3">
-                        ◆주소 : <input id="content" type="text" value="${usersPS.address}" class="form-control"
-                            placeholder=${usersPS.address} readonly>
-                    </div>
+                    <div class="mb-3">◆주소</div>
+                    <input id="content" type="text" value="${usersPS.address}" class="form-control"
+                        placeholder=${usersPS.address} readonly>
                     <br />
                     <div id="phone">${usersPS.phone}</div>
                     <br />
                     <div id="photo">${usersPS.photo}</div>
                     <br />
+                    <div class="mb-3">◆사진</div>
+                    <div class="right">
+                        <img src="/img/${usersPS.photo}" style="width: 200px">
+                    </div>
                 </div>
             </form>
 
