@@ -67,12 +67,17 @@
                     headers: {
                         "Content-Type": "application/json; charset=utf-8",
                     },
+                    error: function (res) {
+                        alert("현재 비밀번호를 잘못 입력했습니다.");
+                        location.href = "/users/" + usersId + "/updatePassword";
+                    },
                 }).done((res) => {
                     if (res.code == 1) {
-                        alert("비밀번호변경 성공");
+                        alert(res.msg);
                         location.href = "/users/" + usersId + "/detail";
                     } else {
-                        alert(res.message);
+                        alert(res.msg);
+                        location.href = "/users/" + usersId + "/updatePassword";
                     }
                 });
             }

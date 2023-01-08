@@ -44,7 +44,7 @@
                     },
                 }).done((res) => {
                     if (res.code == 1) {
-                        alert("게시글 등록 성공");
+                        alert(res.msg);
                         location.href = "/board/list";
                     } else {
                         alert(res.msg);

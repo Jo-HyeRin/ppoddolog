@@ -69,10 +69,10 @@
                     },
                 }).done((res) => {
                     if (res.code == 1) {
-                        alert("게시판 수정 성공");
+                        alert(res.msg);
                         location.href = "/board/users/" + usersId + "/detail/" + boardId;
                     } else {
-                        alert(res.message);
+                        alert(res.msg);
                     }
                 });
             }

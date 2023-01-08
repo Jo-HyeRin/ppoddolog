@@ -79,7 +79,7 @@
                     },
                 }).done((res) => {
                     if (res.code == 1) {
-                        alert("회원가입이 완료되었습니다.");
+                        alert(res.msg);
                         location.href = "/loginForm";
                     } else {
                         alert(res.msg);

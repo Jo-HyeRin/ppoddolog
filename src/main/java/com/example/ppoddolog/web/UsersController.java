@@ -2,6 +2,8 @@ package com.example.ppoddolog.web;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.service.UsersService;
 import com.example.ppoddolog.web.dto.ResponseDto;
 import com.example.ppoddolog.web.dto.users.DetailUsersDto;
@@ -96,7 +97,7 @@ public class UsersController {
     public @ResponseBody ResponseDto<?> updatePassword(@RequestBody PasswordDto passwordDto,
             @PathVariable Integer usersId) {
         usersService.비밀번호변경(passwordDto, usersId);
-        return new ResponseDto<>(1, "비밀번호 변경 성공", null);
+        return new ResponseDto<>(1, "비밀번호변경 성공", null);
     }
 
     @PutMapping("/users/{usersId}/leave")

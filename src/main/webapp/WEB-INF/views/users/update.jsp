@@ -67,6 +67,7 @@
                     phone: $("#phone").val(),
                     photo: $("#photo").val()
                 };
+
                 $.ajax("/users/" + usersId + "/update", {
                     type: "PUT",
                     dataType: "json",
@@ -76,10 +77,10 @@
                     },
                 }).done((res) => {
                     if (res.code == 1) {
-                        alert("내 정보 수정 성공");
+                        alert(res.msg);
                         location.href = "/users/" + usersId + "/detail";
                     } else {
-                        alert(res.message);
+                        alert(res.msg);
                     }
                 });
             }

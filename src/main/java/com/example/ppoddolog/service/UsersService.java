@@ -2,9 +2,11 @@ package com.example.ppoddolog.service;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ppoddolog.config.CustomApiException;
 import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.domain.users.UsersDao;
 import com.example.ppoddolog.util.SHA256;
@@ -59,6 +61,9 @@ public class UsersService {
     @Transactional
     public Users 비밀번호변경(PasswordDto passwordDto, Integer usersId) {
         Users usersPS = usersDao.findById(usersId);
+        if (sha256.encrypt(usersPS.getPassword()) != passwordDto.getPasswordNow()) {
+            throw new CustomApiException("현재 비밀번호와 같지 않습니다", HttpStatus.BAD_REQUEST);
+        }
         // 새 비밀번호로 변경
         passwordDto.setPassword(sha256.encrypt(passwordDto.getPassword()));
         usersPS.updatePassword(passwordDto);

@@ -41,7 +41,7 @@
                     },
                 }).done((res) => {
                     if (res.code == 1) {
-                        alert("로그인 성공");
+                        alert(res.msg);
                         location.href = "/";
                     } else {
                         alert(res.msg);
@@ -51,7 +51,7 @@
             }
 
             $("#btnJoin").click(() => {
-                alert("회원가입페이지로 이동합니다");
+                alert(res.msg);
                 location.href = "/joinForm";
             });
 
