@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,17 +16,18 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.ppoddolog.domain.board.Board;
+import com.example.ppoddolog.config.CustomApiException;
+import com.example.ppoddolog.config.CustomException;
 import com.example.ppoddolog.domain.category.Category;
 import com.example.ppoddolog.service.BoardService;
 import com.example.ppoddolog.service.CategoryService;
 import com.example.ppoddolog.web.dto.PagingDto;
 import com.example.ppoddolog.web.dto.ResponseDto;
-import com.example.ppoddolog.web.dto.board.BoardReqDto.ListReqDto;
+import com.example.ppoddolog.web.dto.board.BoardListDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.SaveDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.UpdateDto;
 import com.example.ppoddolog.web.dto.board.DetailBoardDto;
-import com.example.ppoddolog.web.dto.board.BoardListDto;
+import com.example.ppoddolog.web.dto.users.SignedDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,8 +39,14 @@ public class BoardController {
     private final CategoryService categoryService;
     private final HttpSession session;
 
-    @GetMapping("/board/list")
-    public String boardAll(Integer page, String keyword, Model model) {
+    @GetMapping("/board/users/{usersId}/list")
+    public String boardAll(@PathVariable Integer usersId, Integer page, String keyword, Model model) {
+        // 로그인유저 = 요청유저 확인
+        SignedDto principal = (SignedDto) session.getAttribute("principal");
+        if (principal.getUsersId() != usersId) {
+            throw new CustomException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
+        }
+
         // 선택할 카테고리 목록 뷰 전달
         List<Category> categoryList = categoryService.카테고리목록();
         model.addAttribute("categoryList", categoryList);
@@ -63,7 +72,7 @@ public class BoardController {
     }
 
     @GetMapping("/board/list/{categoryId}")
-    public @ResponseBody ResponseDto<?> boardList(@PathVariable Integer categoryId, Integer page, String keyword,
+    public @ResponseBody ResponseEntity<?> boardList(@PathVariable Integer categoryId, Integer page, String keyword,
             Model model) {
         // 선택할 카테고리 목록 뷰 전달
         List<Category> categoryList = categoryService.카테고리목록();
@@ -87,21 +96,33 @@ public class BoardController {
             model.addAttribute("paging", paging);
         }
 
-        return new ResponseDto<>(1, "게시글 목록보기 성공", null);
+        return new ResponseEntity<>(new ResponseDto<>(1, "게시글목록 카테고리별 보기 성공", HttpStatus.OK), HttpStatus.OK);
 
     }
 
-    @GetMapping("/board/saveForm")
-    public String saveForm(Model model) {
+    @GetMapping("/board/users/{usersId}/saveForm")
+    public String saveForm(@PathVariable Integer usersId, Model model) {
+        // 로그인유저 = 요청유저 확인
+        SignedDto principal = (SignedDto) session.getAttribute("principal");
+        if (principal.getUsersId() != usersId) {
+            throw new CustomException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
+        }
+        // 뷰 응답
         List<Category> categoryList = categoryService.카테고리목록();
         model.addAttribute("categoryList", categoryList);
         return "/board/saveForm";
     }
 
     @PostMapping("/board/users/{usersId}/save")
-    public @ResponseBody ResponseDto<?> saveBoard(@PathVariable Integer usersId, @RequestBody SaveDto saveDto) {
+    public @ResponseBody ResponseEntity<?> saveBoard(@PathVariable Integer usersId, @RequestBody SaveDto saveDto) {
+        // 로그인유저 = 요청유저 확인
+        SignedDto principal = (SignedDto) session.getAttribute("principal");
+        if (principal.getUsersId() != usersId) {
+            throw new CustomApiException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
+        }
+        // 게시글등록
         boardService.게시글등록(usersId, saveDto);
-        return new ResponseDto<>(1, "게시글 등록 성공", null);
+        return new ResponseEntity<>(new ResponseDto<>(1, "게시글등록 성공", HttpStatus.CREATED), HttpStatus.CREATED);
     }
 
     @GetMapping("/board/users/{usersId}/detail/{boardId}")
@@ -111,8 +132,14 @@ public class BoardController {
         return "/board/detail";
     }
 
-    @GetMapping("/board/updateForm/{boardId}")
-    public String updateForm(@PathVariable Integer boardId, Model model) {
+    @GetMapping("/board/users/{usersId}/updateForm/{boardId}")
+    public String updateForm(@PathVariable Integer boardId, @PathVariable Integer usersId, Model model) {
+        // 로그인유저 = 요청유저 확인
+        SignedDto principal = (SignedDto) session.getAttribute("principal");
+        if (principal.getUsersId() != usersId) {
+            throw new CustomException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
+        }
+        // 게시글 상세보기
         DetailBoardDto boardPS = boardService.게시글상세보기(boardId);
         model.addAttribute("boardPS", boardPS);
         List<Category> categoryList = categoryService.카테고리목록();
@@ -121,16 +148,28 @@ public class BoardController {
     }
 
     @PutMapping("/board/users/{usersId}/update/{boardId}")
-    public @ResponseBody ResponseDto<?> updateBoard(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId,
+    public @ResponseBody ResponseEntity<?> updateBoard(@RequestBody UpdateDto updateDto, @PathVariable Integer usersId,
             @PathVariable Integer boardId) {
-        Board boardPS = boardService.게시글수정(updateDto, boardId);
-        return new ResponseDto<>(1, "게시글 수정 성공", null);
+        // 로그인유저 = 요청유저 확인
+        SignedDto principal = (SignedDto) session.getAttribute("principal");
+        if (principal.getUsersId() != usersId) {
+            throw new CustomApiException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
+        }
+        // 게시글수정
+        boardService.게시글수정(updateDto, boardId, usersId);
+        return new ResponseEntity<>(new ResponseDto<>(1, "게시글수정 성공", HttpStatus.OK), HttpStatus.OK);
     }
 
     @DeleteMapping("/board/users/{usersId}/delete/{boardId}")
-    public @ResponseBody ResponseDto<?> deleteBoard(@PathVariable Integer usersId,
+    public @ResponseBody ResponseEntity<?> deleteBoard(@PathVariable Integer usersId,
             @PathVariable Integer boardId) {
+        // 로그인유저 = 요청유저 확인
+        SignedDto principal = (SignedDto) session.getAttribute("principal");
+        if (principal.getUsersId() != usersId) {
+            throw new CustomApiException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
+        }
+        // 게시글삭제
         boardService.게시글삭제(boardId);
-        return new ResponseDto<>(1, "게시글 삭제 성공", null);
+        return new ResponseEntity<>(new ResponseDto<>(1, "게시글삭제 성공", HttpStatus.OK), HttpStatus.OK);
     }
 }

@@ -42,8 +42,9 @@
 
         <script>
             $("#btnUpdateBoard").click(() => {
+                let usersId = $("#usersId").val();
                 let boardId = $("#boardId").val();
-                location.href = "/board/updateForm/" + boardId;
+                location.href = "/board/users/" + usersId + "/updateForm/" + boardId;
             });
 
             $("#btnDeleteBoard").click(() => {
@@ -57,6 +58,9 @@
                 $.ajax("/board/users/" + usersId + "/delete/" + boardId, {
                     type: "DELETE",
                     dataType: "json",
+                    error: function (data, status, error) {
+                        alert(data.responseText);
+                    },
                 }).done((res) => {
                     if (res.code == 1) {
                         alert(res.msg);

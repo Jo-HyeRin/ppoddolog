@@ -36,7 +36,7 @@ public class Users {
         this.address = address;
         this.phone = phone;
         this.photo = photo;
-        this.role = "user";
+        this.role = "admin";
         this.state = "active";
     }
 

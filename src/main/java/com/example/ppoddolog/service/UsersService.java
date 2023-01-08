@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.ppoddolog.config.CustomApiException;
+import com.example.ppoddolog.config.CustomException;
 import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.domain.users.UsersDao;
 import com.example.ppoddolog.util.SHA256;
@@ -47,12 +48,22 @@ public class UsersService {
     }
 
     public DetailUsersDto 상세보기(Integer usersId) {
+        Users usersPS = usersDao.findById(usersId);
+        if (usersPS.equals(null)) {
+            throw new CustomException("없는 회원의 상세보기를 요청했습니다.", HttpStatus.BAD_REQUEST);
+        }
+        if (usersPS.getUsersId() != usersId) {
+            throw new CustomException("본인 정보가 아닙니다.", HttpStatus.BAD_REQUEST);
+        }
         return usersDao.findByIdDetail(usersId);
     }
 
     @Transactional
     public Users 유저수정(UpdateDto updateDto, Integer usersId) {
         Users usersPS = usersDao.findById(usersId);
+        if (usersPS.getUsersId() != usersId) {
+            throw new CustomApiException("본인이 아닙니다.", HttpStatus.BAD_REQUEST);
+        }
         usersPS.updateUsers(updateDto);
         usersDao.update(usersPS);
         return usersPS;
@@ -61,6 +72,9 @@ public class UsersService {
     @Transactional
     public Users 비밀번호변경(PasswordDto passwordDto, Integer usersId) {
         Users usersPS = usersDao.findById(usersId);
+        if (usersPS.getUsersId() != usersId) {
+            throw new CustomApiException("본인이 아니므로 비밀번호를 바꿀 수 없습니다.", HttpStatus.BAD_REQUEST);
+        }
         if (sha256.encrypt(usersPS.getPassword()) != passwordDto.getPasswordNow()) {
             throw new CustomApiException("현재 비밀번호와 같지 않습니다", HttpStatus.BAD_REQUEST);
         }
@@ -80,15 +94,15 @@ public class UsersService {
     }
 
     // 관리자페이지---------------------------------------------------//
-    public List<UsersListDto> 활동회원목록() {
+    public List<UsersListDto> 활동회원목록(Integer adminId) {
         return usersDao.findAllActive();
     }
 
-    public List<UsersListDto> 정지회원목록() {
+    public List<UsersListDto> 정지회원목록(Integer adminId) {
         return usersDao.findAllStop();
     }
 
-    public List<UsersListDto> 탈퇴회원목록() {
+    public List<UsersListDto> 탈퇴회원목록(Integer adminId) {
         return usersDao.findAllInactive();
     }
 

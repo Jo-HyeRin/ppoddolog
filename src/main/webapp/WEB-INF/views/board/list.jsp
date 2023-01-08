@@ -74,7 +74,7 @@
         <script>
             $("#btnSave").click(() => {
                 let usersId = $("#usersId").val();
-                location.href = "/board/saveForm";
+                location.href = "/board/users/" + usersId + "/saveForm";
             });
         </script>
 

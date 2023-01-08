@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="../layout/header.jsp" %>
 
+        <input id="adminId" type="hidden" value="${principal.usersId}" />
         <input id="usersId" type="hidden" value="${usersPS.usersId}" />
 
         <div class="container">
@@ -55,10 +56,11 @@
             });
 
             function stopUsers() {
+                let adminId = $("#adminId").val();
                 let usersId = $("#usersId").val();
                 let data = "stop";
 
-                $.ajax("/admin/stopUsers/" + usersId, {
+                $.ajax("/admin/" + adminId + "/stopUsers/" + usersId, {
                     type: "PUT",
                     dataType: "json",
                     data: JSON.stringify(data),
@@ -68,7 +70,7 @@
                 }).done((res) => {
                     if (res.code == 1) {
                         alert("회원정지 성공");
-                        location.href = "/admin/activeUsersList";
+                        location.href = "/admin/" + adminId + "/activeUsersList";
                     } else {
                         alert(res.message);
                     }
@@ -80,10 +82,11 @@
             });
 
             function activeUsers() {
+                let adminId = $("#adminId").val();
                 let usersId = $("#usersId").val();
                 let data = "active";
 
-                $.ajax("/admin/activeUsers/" + usersId, {
+                $.ajax("/admin/" + adminId + "/activeUsers/" + usersId, {
                     type: "PUT",
                     dataType: "json",
                     data: JSON.stringify(data),
@@ -93,7 +96,7 @@
                 }).done((res) => {
                     if (res.code == 1) {
                         alert("회원정지해제 성공");
-                        location.href = "/admin/activeUsersList";
+                        location.href = "/admin/" + adminId + "/activeUsersList";
                     } else {
                         alert(res.message);
                     }
@@ -106,15 +109,16 @@
             });
 
             function deleteUsers() {
+                let adminId = $("#adminId").val();
                 let usersId = $("#usersId").val();
 
-                $.ajax("/admin/deleteUsers/" + usersId, {
+                $.ajax("/admin/" + adminId + "/deleteUsers/" + usersId, {
                     type: "DELETE",
                     dataType: "json",
                 }).done((res) => {
                     if (res.code == 1) {
                         alert("회원영구삭제 성공");
-                        location.href = "/";
+                        location.href = "/admin/" + adminId + "/activeUsersList";
                     } else {
                         alert(res.message);
                     }

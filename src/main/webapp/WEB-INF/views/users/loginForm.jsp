@@ -39,6 +39,9 @@
                     headers: {
                         "Content-Type": "application/json; charset=utf-8",
                     },
+                    error: function (data, status, error) {
+                        alert(data.responseText);
+                    },
                 }).done((res) => {
                     if (res.code == 1) {
                         alert(res.msg);

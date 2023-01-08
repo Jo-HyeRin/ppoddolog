@@ -42,6 +42,9 @@
                     headers: {
                         "Content-Type": "application/json",
                     },
+                    error: function (data, status, error) {
+                        alert(data.responseText);
+                    },
                 }).done((res) => {
                     if (res.code == 1) {
                         alert(res.msg);

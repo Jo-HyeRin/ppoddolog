@@ -67,9 +67,10 @@
                     headers: {
                         "Content-Type": "application/json; charset=utf-8",
                     },
-                    error: function (res) {
-                        alert("현재 비밀번호를 잘못 입력했습니다.");
-                        location.href = "/users/" + usersId + "/updatePassword";
+                    error: function (data, status, error) {
+                        alert(data.responseText);
+                        // console.log("HttpStatus: " + data.status);
+                        // console.log("CustomApiException.msg: " + data.responseText);
                     },
                 }).done((res) => {
                     if (res.code == 1) {
