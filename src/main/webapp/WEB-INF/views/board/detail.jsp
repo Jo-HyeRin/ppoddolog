@@ -16,15 +16,8 @@
                 <br />
                 <div>
                     좋아요수 : <span id="countLikes">${boardPS.likesCount}</span>
-                    <c:choose>
-                        <c:when test="${boardPS.isLikes eq true}">
-                            <i id="iconLikes" class='${"fa-solid"} fa-heart my_pointer my_red'></i>
-                        </c:when>
-                        <c:otherwise>
-                            <i id="iconLikes" class='${"fa-regular"} fa-heart my_pointer my_red'></i>
-                        </c:otherwise>
-                    </c:choose>
-
+                    <i id="iconLikes"
+                        class='${boardPS.isLikes ? "fa-solid" : "fa-regular"} fa-heart my_pointer my_red'></i>
                 </div>
 
                 <br />
