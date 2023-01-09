@@ -30,10 +30,10 @@
 }
 
 .nav_menu {
-    margin: 0 0 0 8px;
+    margin: 8px 0 0 8px;
     font-size: 1.2rem;
-    border: none;
-    background-color: transparent;
+    color: black;
+    font-weight: bold;
 }
 
 /* 800px 이하일 때 텍스트 없애기 */

@@ -1,0 +1,46 @@
+.main_wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 50px 0 50px;
+    padding: 20px 0 0 0;
+}
+
+.main_item {
+    width: 100%;
+    padding: 0 10px;
+    justify-content: space-between;
+}
+
+.main_title {
+    width: 100%;
+    font-size: 2rem;
+    margin: 40px 0 20px 0;
+}
+
+.main_content {
+    width: 50%;
+}
+
+.main_img {
+    display: inline-block;
+    width: 50%;
+    margin-right: 10px;
+}
+
+.main_img img {
+    max-width: 90%;
+}
+
+.main_text {
+    display: inline-block;
+    font-size: 1rem;
+    width: 45%;
+}
+
+/* 600px 이하가 되는 경우 메인텍스트를 안보이게 한다.*/
+@media screen and (max-width: 600px) {
+    .main_text {
+        display: none;
+    }
+}

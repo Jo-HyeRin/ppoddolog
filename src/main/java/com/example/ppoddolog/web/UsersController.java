@@ -115,7 +115,7 @@ public class UsersController {
             throw new CustomApiException("로그인 실패", HttpStatus.FORBIDDEN);
         }
         session.setAttribute("principal", principal);
-        return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", HttpStatus.OK), HttpStatus.OK);
+        return new ResponseEntity<>(new ResponseDto<>(1, "로그인 성공", principal.getUsersId()), HttpStatus.OK);
     }
 
     @GetMapping("/logout")

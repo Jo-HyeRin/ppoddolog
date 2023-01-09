@@ -53,7 +53,8 @@
                     },
                 }).done((res) => {
                     if (res.code == 1) {
-                        location.href = "/";
+                        let usersId = res.data;
+                        location.href = "/board/users/" + usersId + "/list";
                     } else {
                         alert(res.msg);
                         return false;

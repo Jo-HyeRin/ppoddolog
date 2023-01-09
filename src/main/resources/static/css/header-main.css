@@ -1,0 +1,59 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 3px #000;
+    z-index: 20;
+}
+
+.header_wrapper {
+    /* display: flex; : 내부 요소 가로 정렬 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 16px;
+}
+
+.header_start {
+    height: 40px;
+    line-height: 40px;
+}
+
+.header_heart {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+}
+
+.header_title {
+    font-size: 1.5rem;
+    margin-left: 6px;
+}
+
+.header_title--button {
+    border: none;
+    background-color: transparent;
+}
+
+.header_form {
+    display: flex;
+    max-width: 100%;
+}
+
+.header_end--button {
+    border: none;
+    background-color: transparent;
+    margin: 8px 0 0 8px;
+    font-size: 1.2rem;
+    color: black;
+}
+
+/* 600px 이하가 되는 경우 로고를 안보이게 한다.*/
+@media screen and (max-width: 600px) {
+    .header_title {
+        display: none;
+    }
+}
