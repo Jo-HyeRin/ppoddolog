@@ -53,7 +53,6 @@
                     },
                 }).done((res) => {
                     if (res.code == 1) {
-                        alert(res.msg);
                         location.href = "/";
                     } else {
                         alert(res.msg);

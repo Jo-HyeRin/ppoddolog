@@ -9,10 +9,12 @@
                         maxlength="20">
                     <button id="btnUsernameSameCheck" class="btn btn-warning" type="button">아이디 중복체크</button>
                 </div>
+                <span class="usernameValid" style="padding-left: 120px; color: red; display: none"></span>
                 <div class="mb-3">
                     ◆비밀번호 <input id="password" type="password" class="form-control" placeholder="비밀번호를 입력해주세요"
                         maxlength="20">
                 </div>
+                <span class="passwordValid" style="padding-left: 120px; color: red; display: none"></span>
                 <div class="mb-3">
                     ◆비밀번호확인
                     <span id="passwordCheck" style="visibility: hidden; color: tomato;">
@@ -20,17 +22,21 @@
                     <input id="passwordConfirm" type="password" class="form-control" placeholder="비밀번호를 한 번 더 입력해주세요"
                         maxlength="20">
                 </div>
+                <span class="passwordCheckValid" style="padding-left: 120px; color: red; display: none"></span>
                 <div class="mb-3">
                     ◆이름 <input id="realname" type="text" class="form-control" placeholder="이름을 입력해주세요" maxlength="20">
                 </div>
+                <span class="realnameValid" style="padding-left: 120px; color: red; display: none"></span>
                 <div class="mb-3">
                     ◆닉네임 <input id="nickname" type="text" class="form-control" placeholder="닉네임을 입력해주세요" maxlength="20">
                     <button id="btnNicknameSameCheck" class="btn btn-warning" type="button">닉네임 중복체크</button>
                 </div>
+                <span class="nicknameValid" style="padding-left: 120px; color: red; display: none"></span>
                 <div class="mb-3">
                     ◆이메일<input id="email" type="text" class="form-control" placeholder="이메일을 입력해주세요" maxlength="50">
                     <button id="btnEmailSameCheck" class="btn btn-warning" type="button">이메일 중복체크</button>
                 </div>
+                <span class="emailValid" style="padding-left: 120px; color: red; display: none"></span>
                 <div class="mb-3">
                     ◆주소
                     <input id="postcode" type="text" placeholder="우편번호" readonly onclick="findAddress()">

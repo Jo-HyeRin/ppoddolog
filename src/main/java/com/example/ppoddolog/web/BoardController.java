@@ -75,7 +75,7 @@ public class BoardController {
             model.addAttribute("boardList", boardList);
             model.addAttribute("paging", paging);
         }
-        return "/board/list";
+        return "/board/boardList";
     }
 
     @GetMapping("/board/list/{categoryId}")
@@ -118,7 +118,7 @@ public class BoardController {
         // 뷰 응답
         List<Category> categoryList = categoryService.카테고리목록();
         model.addAttribute("categoryList", categoryList);
-        return "/board/saveForm";
+        return "/board/saveBoardForm";
     }
 
     @PostMapping("/board/users/{usersId}/save")
@@ -158,7 +158,7 @@ public class BoardController {
     public String detailBoard(@PathVariable Integer usersId, @PathVariable Integer boardId, Model model) {
         DetailBoardDto boardPS = boardService.게시글상세보기(boardId, usersId);
         model.addAttribute("boardPS", boardPS);
-        return "/board/detail";
+        return "/board/detailBoard";
     }
 
     // 게시글 수정
@@ -174,7 +174,7 @@ public class BoardController {
         model.addAttribute("boardPS", boardPS);
         List<Category> categoryList = categoryService.카테고리목록();
         model.addAttribute("categoryList", categoryList);
-        return "/board/updateForm";
+        return "/board/updateBoardForm";
     }
 
     @PutMapping("/board/users/{usersId}/update/{boardId}")

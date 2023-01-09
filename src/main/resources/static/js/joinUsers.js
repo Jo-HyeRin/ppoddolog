@@ -210,6 +210,7 @@ $("#btnJoin").click(() => {
         return;
     }
 
+    valid();
     join();
 });
 
@@ -245,4 +246,203 @@ function join() {
             return false;
         }
     });
+}
+
+
+// 유효성 검사 시작 ---------------------------------------------------//
+function valid() {
+    let username = $("#username").val();
+    let password = $("#password").val();
+    let passwordCheck = $("#passwordCheck").val();
+    let realname = $("#realname").val();
+    let nickname = $("#nickname").val();
+    let email = $("#email").val();
+
+
+    if (username == null) {
+        return true;
+    }
+    if (password == null) {
+        return true;
+    }
+    if (passwordCheck == null) {
+        return true;
+    }
+    if (realname == null) {
+        return true;
+    }
+    if (nickname == null) {
+        return true;
+    }
+    if (email == null) {
+        return true;
+    }
+    if (validUsername()) {
+        return true;
+    }
+    if (validPassword()) {
+        return true;
+    }
+    if (validPasswordCheck()) {
+        return true;
+    }
+    if (validRealname()) {
+        return true;
+    }
+    if (validNickname()) {
+        return true;
+    }
+    if (validEmail()) {
+        return true;
+    } else {
+        return;
+    }
+}
+
+// username 유효성 검사
+function validUsername() {
+    let username = $("#username").val();
+    var spaceRule = /\s/g;
+    var korRule = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    if (korRule.test(username)) {
+        $(".usernameValid").css("display", "inline-block");
+        $(".usernameValid").text(
+            "아이디는 영문소문자, 숫자, 특수기호(_)만 사용 가능합니다."
+        );
+        return true;
+    }
+    if (spaceRule.test(username)) {
+        $(".usernameValid").css("display", "inline-block");
+        $(".usernameValid").text("공백을 제거해주세요");
+        return true;
+    }
+    if (username.length < 1) {
+        $(".usernameValid").css("display", "inline-block");
+        $(".usernameValid").text("아이디는 필수 입력정보입니다.");
+        return true;
+    }
+    if (username.length < 2) {
+        $(".usernameValid").css("display", "inline-block");
+        $(".usernameValid").text("아이디는 2자~15자 내외로 입력해주세요.");
+        return true;
+    } else {
+        $(".usernameValid").css("display", "none");
+        return false;
+    }
+}
+
+// password 유효성 검사
+function validPassword() {
+    let password = $("#password").val();
+    var spaceRule = /\s/g;
+    var korRule = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+    if (korRule.test(password)) {
+        $(".passwordValid").css("display", "inline-block");
+        $(".passwordValid").text(
+            "숫자, 영문 대소문자, 특수문자 중 두가지 이상으로 조합해 주십시오."
+        );
+        return true;
+    }
+    if (spaceRule.test(password)) {
+        $(".passwordValid").css("display", "inline-block");
+        $(".passwordValid").text("공백을 제거해주세요");
+        return true;
+    }
+    if (password.length < 1) {
+        $(".passwordValid").css("display", "inline-block");
+        $(".passwordValid").text("비밀번호는 필수 정보입니다.");
+        return true;
+    }
+    if (password.length < 4 || password.length > 20) {
+        $(".passwordValid").css("display", "inline-block");
+        $(".passwordValid").text(
+            "비밀번호는 4자~20자 내외로 입력해주세요."
+        );
+        return true;
+    } else {
+        $(".passwordValid").css("display", "none");
+        return false;
+    }
+}
+
+// password확인 유효성 검사
+function validPasswordSame() {
+    let password = $("#password").val();
+    let passwordCheck = $("#passwordCheck").val();
+    if (password != passwordCheck) {
+        $(".passwordCheckValid").css("display", "inline-block");
+        $(".passwordCheckValid").text("비밀번호가 일치하지 않습니다.");
+        return true;
+    }
+    if (password.length < 1) {
+        $(".passwordCheckValid").css("display", "inline-block");
+        $(".passwordCheckValid").text("비밀번호 재확인은 필수정보입니다.");
+        return true;
+    } else {
+        $(".passwordCheckValid").css("display", "none");
+        return false;
+    }
+}
+
+// realname 유효성 검사
+function validRealname() {
+    let realname = $("#realname").val();
+    var spaceRule = /\s/g;
+    if (spaceRule.test(realname)) {
+        $(".realnameValid").css("display", "inline-block");
+        $(".realnameValid").text("공백을 제거해주세요");
+        return true;
+    }
+    if (realname.length < 1) {
+        $(".realnameValid").css("display", "inline-block");
+        $(".realnameValid").text("닉네임은 필수 정보입니다.");
+        return true;
+    } else {
+        $(".realnameValid").css("display", "none");
+        return false;
+    }
+}
+
+// nickname 유효성 검사
+function validNickname() {
+    let nickname = $("#nickname").val();
+    var spaceRule = /\s/g;
+    if (spaceRule.test(nickname)) {
+        $(".nicknameValid").css("display", "inline-block");
+        $(".nicknameValid").text("공백을 제거해주세요");
+        return true;
+    }
+    if (nickname.length < 1) {
+        $(".nicknameValid").css("display", "inline-block");
+        $(".nicknameValid").text("닉네임은 필수 정보입니다.");
+        return true;
+    } else {
+        $(".nicknameValid").css("display", "none");
+        return false;
+    }
+}
+
+// email 유효성 검사
+function validEmail() {
+    let email = $("#email").val();
+    var spaceRule = /\s/g;
+    var emailRule = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    if (spaceRule.test(email)) {
+        $(".emailValid").css("display", "inline-block");
+        $(".emailValid").text("공백을 제거해주세요");
+        return true;
+    }
+    if (email.length < 1) {
+        $(".emailValid").css("display", "inline-block");
+        $(".emailValid").text("이메일은 필수 정보입니다.");
+        return true;
+    }
+    if (!emailRule.test(email)) {
+        $(".emailValid").css("display", "inline-block");
+        $(".emailValid").text("올바르지 않은 이메일 형식입니다.");
+        return true;
+    } else {
+        $(".emailValid").css("display", "none");
+        return false;
+    }
 }

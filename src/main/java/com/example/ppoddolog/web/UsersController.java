@@ -44,6 +44,11 @@ public class UsersController {
     private final UsersService usersService;
     private final HttpSession session;
 
+    @GetMapping("/index")
+    public String index() {
+        return "index";
+    }
+
     @GetMapping({ "/", "/main" })
     public String main() {
         return "main";
@@ -129,7 +134,7 @@ public class UsersController {
         // 상세보기
         DetailUsersDto usersPS = usersService.상세보기(usersId);
         model.addAttribute("usersPS", usersPS);
-        return "/users/detail";
+        return "/users/detailUsers";
     }
 
     @GetMapping("/users/{usersId}/update")
@@ -144,7 +149,7 @@ public class UsersController {
         model.addAttribute("usersAddress", usersAddress);
         DetailUsersDto usersPS = usersService.상세보기(usersId);
         model.addAttribute("usersPS", usersPS);
-        return "/users/update";
+        return "/users/updateUsersForm";
     }
 
     @PutMapping("/users/{usersId}/update")
@@ -187,7 +192,7 @@ public class UsersController {
             throw new CustomException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
         }
         // 뷰 응답
-        return "/users/updatePassword";
+        return "/users/updatePasswordForm";
     }
 
     @PutMapping("/users/{usersId}/updatePassword")

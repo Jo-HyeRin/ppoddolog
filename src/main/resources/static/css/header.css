@@ -1,0 +1,104 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 0 3px #000;
+    z-index: 20;
+}
+
+.header_wrapper {
+    /* display: flex; : 내부 요소 가로 정렬 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 0 16px;
+}
+
+.header_start {
+    height: 40px;
+    line-height: 40px;
+}
+
+.header_hamburger {
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+}
+
+.header_title {
+    font-size: 1.2rem;
+    margin-left: 6px;
+}
+
+.header_center {
+    width: 50%;
+}
+
+.header_form {
+    display: flex;
+    max-width: 100%;
+}
+
+.header_input--text {
+    /* 검색버튼크기만 빼준다 */
+    width: calc(100% - 60px);
+    height: 40px;
+    padding: 0 6px;
+    border: 1px solid #8f8f8f;
+    border-right: none;
+    border-radius: 2px 0 0 2px;
+}
+
+.header_input--button {
+    width: 60px;
+    height: 40px;
+    border: 1px solid #8f8f8f;
+    border-right: none;
+    border-radius: 0 2px 2px 0;
+}
+
+.header_end {
+    display: flex;
+}
+
+.header_search {
+    /* 화면이 좁아지면 검색바 사라지고 보이는 돋보기 버튼 */
+    display: none;
+    margin-right: 5px;
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+}
+
+.header_profile {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #eaeaea;
+    border-radius: 50%;
+    background-color: tomato;
+    /* 
+    프로필 사진을 넣는 경우 아래 설정해주면 됨.
+    background-image: url(../imgs/이미지경로);
+    background-size: 40px 40px; */
+}
+
+/* 800px 이하가 되는 경우 로고를 안보이게 한다.*/
+@media screen and (max-width: 800px) {
+    .header_title {
+        display: none;
+    }
+}
+
+/* 400px 이하가 되는 경우 검색창을 돋보기로 대체한다. */
+@media screen and (max-width: 400px) {
+    .header_center {
+        display: none;
+    }
+
+    .header_search {
+        display: block;
+    }
+}
