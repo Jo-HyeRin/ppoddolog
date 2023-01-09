@@ -25,7 +25,6 @@ import com.example.ppoddolog.config.CustomApiException;
 import com.example.ppoddolog.config.CustomException;
 import com.example.ppoddolog.domain.category.Category;
 import com.example.ppoddolog.domain.likes.Likes;
-import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.service.BoardService;
 import com.example.ppoddolog.service.CategoryService;
 import com.example.ppoddolog.web.dto.PagingDto;

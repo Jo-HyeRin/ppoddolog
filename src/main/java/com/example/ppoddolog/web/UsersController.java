@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.UUID;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.http.HttpStatus;
@@ -77,12 +80,31 @@ public class UsersController {
     }
 
     @GetMapping("/loginForm")
-    public String loginForm() {
+    public String loginForm(Model model, HttpServletRequest request) {
+        // 자동 로그인 쿠키
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("username")) {
+                model.addAttribute(cookie.getName(), cookie.getValue());
+            }
+        }
         return "/users/loginForm";
     }
 
     @PostMapping("/login")
-    public @ResponseBody ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+    public @ResponseBody ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpServletResponse response) {
+        // 자동 로그인 쿠키
+        if (loginDto.isRemember()) {
+            Cookie cookie = new Cookie("username", loginDto.getUsername());
+            cookie.setMaxAge(60 * 60 * 24);
+            response.addCookie(cookie);
+        } else {
+            Cookie cookie = new Cookie("username", null);
+            cookie.setMaxAge(0);
+            response.addCookie(cookie);
+        }
+
+        // 로그인
         SignedDto principal = usersService.로그인(loginDto);
         if (principal == null) {
             throw new CustomApiException("로그인 실패", HttpStatus.FORBIDDEN);

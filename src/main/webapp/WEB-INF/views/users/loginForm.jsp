@@ -5,12 +5,20 @@
             <h2>로그인</h2>
             <form>
                 <div class="mb-3 mt-3">
-                    ◆아이디 <input id="username" type="text" class="form-control" placeholder="아이디를 입력해주세요.">
+                    ◆아이디 <input id="username" type="text" class="form-control" placeholder="아이디를 입력해주세요."
+                        maxlength="20">
                 </div>
                 <div class="mb-3">
-                    ◆비밀번호 <input id="password" type="password" class="form-control" placeholder="비밀번호를 입력해주세요">
+                    ◆비밀번호 <input id="password" type="password" class="form-control" placeholder="비밀번호를 입력해주세요"
+                        maxlength="20">
                 </div>
                 <div class="mb-5"></div>
+
+                <div class="form-check mb-3">
+                    <label class="form-check-label">
+                        <input id="remember" class="form-check-input" type="checkbox"> 로그인상태유지
+                    </label>
+                </div>
 
                 <div class="d-grid gap-1 col-2 mx-auto">
                     <button id="btnLogin" type="button" class="btn btn-primary">로그인</button>
@@ -26,7 +34,8 @@
             $("#btnLogin").click(() => {
                 let loginData = {
                     username: $("#username").val(),
-                    password: $("#password").val()
+                    password: $("#password").val(),
+                    remember: $("#remember").prop("checked")
                 };
                 login(loginData);
             });
