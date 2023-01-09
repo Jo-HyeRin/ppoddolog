@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ppoddolog.domain.likes.LikesDao">
+
+	<select id="findById"
+		resultType="com.example.ppoddolog.domain.likes.Likes">
+		SELECT * FROM likes WHERE likes_id=#{likesId}
+	</select>
+
+	<select id="findAll"
+		resultType="com.example.ppoddolog.domain.likes.Likes">
+		SELECT * FROM likes
+	</select>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="likesId">
+		INSERT INTO likes(users_id, board_id, created_at)
+		VALUES(#{usersId}, #{boardId}, now())
+	</insert>
+
+	<delete id="deleteById">
+		DELETE FROM likes WHERE likes_id = #{likesId}
+	</delete>
+
+</mapper>

@@ -10,11 +10,14 @@
 
 	<select id="findByIdDetail"
 		resultType="com.example.ppoddolog.web.dto.board.DetailBoardDto">
-		SELECT b.title, b.thumbnail, b.content, c.category_name, u.nickname, DATE_FORMAT(b.created_at, '%Y년 %m월 %d일')date, b.board_id
+		SELECT b.title, b.thumbnail, b.content, c.category_name, u.nickname, DATE_FORMAT(b.created_at, '%Y년 %m월 %d일')DATE, 
+		b.board_id, l.likes_id, if(l.likes_id is null, 0, 1) isLikes, 
+		(select count(*) from likes where board_id = #{boardId}) likesCount
 		FROM board b
-		JOIN users u ON b.users_id = u.users_id
-		JOIN category c ON b.category_id = c.category_id
-		WHERE board_id=#{boardId}
+		LEFT OUTER JOIN users u ON b.users_id = u.users_id
+		LEFT OUTER JOIN category c ON b.category_id = c.category_id
+		LEFT OUTER JOIN (SELECT * FROM likes WHERE users_id = #{principalId}) l ON b.board_id = l.board_id
+		WHERE b.board_id=#{boardId}
 	</select>
 
 	<select id="boardPaging"

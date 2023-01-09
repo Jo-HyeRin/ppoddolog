@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.ppoddolog.config.CustomApiException;
 import com.example.ppoddolog.config.CustomException;
 import com.example.ppoddolog.domain.category.Category;
+import com.example.ppoddolog.domain.likes.Likes;
+import com.example.ppoddolog.domain.users.Users;
 import com.example.ppoddolog.service.BoardService;
 import com.example.ppoddolog.service.CategoryService;
 import com.example.ppoddolog.web.dto.PagingDto;
@@ -45,6 +46,7 @@ public class BoardController {
     private final CategoryService categoryService;
     private final HttpSession session;
 
+    // 게시글 목록보기
     @GetMapping("/board/users/{usersId}/list")
     public String boardAll(@PathVariable Integer usersId, Integer page, String keyword, Model model) {
         // 로그인유저 = 요청유저 확인
@@ -106,6 +108,7 @@ public class BoardController {
 
     }
 
+    // 게시글 등록
     @GetMapping("/board/users/{usersId}/saveForm")
     public String saveForm(@PathVariable Integer usersId, Model model) {
         // 로그인유저 = 요청유저 확인
@@ -151,13 +154,15 @@ public class BoardController {
         return new ResponseEntity<>(new ResponseDto<>(1, "게시글등록 성공", HttpStatus.CREATED), HttpStatus.CREATED);
     }
 
+    // 게시글 상세보기
     @GetMapping("/board/users/{usersId}/detail/{boardId}")
     public String detailBoard(@PathVariable Integer usersId, @PathVariable Integer boardId, Model model) {
-        DetailBoardDto boardPS = boardService.게시글상세보기(boardId);
+        DetailBoardDto boardPS = boardService.게시글상세보기(boardId, usersId);
         model.addAttribute("boardPS", boardPS);
         return "/board/detail";
     }
 
+    // 게시글 수정
     @GetMapping("/board/users/{usersId}/updateForm/{boardId}")
     public String updateForm(@PathVariable Integer boardId, @PathVariable Integer usersId, Model model) {
         // 로그인유저 = 요청유저 확인
@@ -166,7 +171,7 @@ public class BoardController {
             throw new CustomException("본인이 아닙니다.", HttpStatus.FORBIDDEN);
         }
         // 게시글 상세보기
-        DetailBoardDto boardPS = boardService.게시글상세보기(boardId);
+        DetailBoardDto boardPS = boardService.게시글상세보기(boardId, usersId);
         model.addAttribute("boardPS", boardPS);
         List<Category> categoryList = categoryService.카테고리목록();
         model.addAttribute("categoryList", categoryList);
@@ -217,5 +222,21 @@ public class BoardController {
         // 게시글삭제
         boardService.게시글삭제(boardId);
         return new ResponseEntity<>(new ResponseDto<>(1, "게시글삭제 성공", HttpStatus.OK), HttpStatus.OK);
+    }
+
+    // 좋아요 추가
+    @PostMapping("/board/{boardId}/likes")
+    public @ResponseBody ResponseDto<?> insertLikes(@PathVariable Integer boardId) {
+        SignedDto principal = (SignedDto) session.getAttribute("principal");
+        Likes likes = new Likes(principal.getUsersId(), boardId);
+        boardService.좋아요추가(likes);
+        return new ResponseDto<>(1, "좋아요 추가 성공", likes);
+    }
+
+    // 좋아요 삭제
+    @DeleteMapping("/board/{boardId}/unlikes/{likesId}")
+    public @ResponseBody ResponseDto<?> deleteLikes(@PathVariable Integer boardId, @PathVariable Integer likesId) {
+        boardService.좋아요삭제(likesId);
+        return new ResponseDto<>(1, "좋아요 삭제 성공", null);
     }
 }

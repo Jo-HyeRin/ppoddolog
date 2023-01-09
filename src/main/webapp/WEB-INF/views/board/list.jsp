@@ -38,7 +38,7 @@
                         <td>${boardList.row}</td>
                         <td>
                             <div id="title" class="container p-4 my-4 border">
-                                <a href="/board/users/${boardList.usersId}/detail/${boardList.boardId}">
+                                <a href="/board/users/${principal.usersId}/detail/${boardList.boardId}">
                                     ${boardList.title}</a>
                             </div>
                         </td>

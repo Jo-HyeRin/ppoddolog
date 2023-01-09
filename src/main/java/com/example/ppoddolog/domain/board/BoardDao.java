@@ -12,7 +12,7 @@ public interface BoardDao {
 
     public Board findById(Integer boardId);
 
-    public DetailBoardDto findByIdDetail(Integer boardId);
+    public DetailBoardDto findByIdDetail(@Param("boardId") Integer boardId, @Param("principalId") Integer principalId);
 
     public List<BoardListDto> findAll(int startNum);
 

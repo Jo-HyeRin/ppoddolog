@@ -5,9 +5,9 @@ import java.sql.Timestamp;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.UpdateDto;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Getter
 public class Board {
     private Integer boardId;

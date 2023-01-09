@@ -13,4 +13,7 @@ public class DetailBoardDto {
     private String categoryName;
     private String nickname;
     private String date;
+    private Integer likesId;
+    private Boolean isLikes;
+    private Integer likesCount;
 }

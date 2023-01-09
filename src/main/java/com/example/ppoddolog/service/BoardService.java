@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.ppoddolog.config.CustomApiException;
 import com.example.ppoddolog.domain.board.Board;
 import com.example.ppoddolog.domain.board.BoardDao;
+import com.example.ppoddolog.domain.likes.Likes;
+import com.example.ppoddolog.domain.likes.LikesDao;
 import com.example.ppoddolog.web.dto.PagingDto;
 import com.example.ppoddolog.web.dto.board.BoardListDto;
 import com.example.ppoddolog.web.dto.board.BoardReqDto.SaveDto;
@@ -22,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardService {
 
     private final BoardDao boardDao;
+    private final LikesDao likesDao;
 
     // 페이징
     public PagingDto 게시글페이징(Integer page, String keyword) {
@@ -55,8 +58,8 @@ public class BoardService {
     }
 
     // 게시글상세보기
-    public DetailBoardDto 게시글상세보기(Integer boardId) {
-        return boardDao.findByIdDetail(boardId);
+    public DetailBoardDto 게시글상세보기(Integer boardId, Integer usersId) {
+        return boardDao.findByIdDetail(boardId, usersId);
     }
 
     // 게시글수정
@@ -78,5 +81,16 @@ public class BoardService {
     public void 게시글삭제(Integer boardId) {
         Board boardPS = boardDao.findById(boardId);
         boardDao.delete(boardPS);
+    }
+
+    // 좋아요추가
+    public Likes 좋아요추가(Likes likes) {
+        likesDao.insert(likes);
+        return likes;
+    }
+
+    // 좋아요삭제
+    public void 좋아요삭제(Integer likesId) {
+        likesDao.deleteById(likesId);
     }
 }
