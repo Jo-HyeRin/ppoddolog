@@ -210,7 +210,6 @@ $("#btnJoin").click(() => {
         return;
     }
 
-    valid();
     join();
 });
 
@@ -248,7 +247,6 @@ function join() {
     });
 }
 
-
 // 유효성 검사 시작 ---------------------------------------------------//
 function valid() {
     let username = $("#username").val();
@@ -257,7 +255,6 @@ function valid() {
     let realname = $("#realname").val();
     let nickname = $("#nickname").val();
     let email = $("#email").val();
-
 
     if (username == null) {
         return true;

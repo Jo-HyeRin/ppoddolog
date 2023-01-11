@@ -9,7 +9,6 @@
 }
 
 .header_wrapper {
-    /* display: flex; : 내부 요소 가로 정렬 */
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -52,11 +51,16 @@
     height: 40px;
     border: 1px solid #eaeaea;
     border-radius: 50%;
-    background-color: tomato;
+    background-color: lightgrey;
+}
+
+.header_user {
+    font-size: 1rem;
+    margin: 5px;
 }
 
 /* 600px 이하가 되는 경우 로고를 안보이게 한다.*/
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     .header_title {
         display: none;
     }

@@ -15,7 +15,6 @@
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
             <link href="/css/reset.css" rel="stylesheet">
             <link href="/css/header-main.css" rel="stylesheet">
-            <link href="/css/footer.css" rel="stylesheet">
             <link href="/css/main.css" rel="stylesheet">
         </head>
 

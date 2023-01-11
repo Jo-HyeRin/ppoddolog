@@ -10,7 +10,7 @@
 }
 
 .login_container {
-    width: 60%;
+    width: 50%;
     box-shadow: 0 0 1px #000;
     margin: 20px 0 30px 20%;
     padding: 1px 0;
@@ -18,7 +18,7 @@
 
 .login_content {
     width: 80%;
-    margin: 10px 0 20px 30px;
+    margin: 10px 0 20px 10%;
 }
 
 .login_content--text {
@@ -37,7 +37,7 @@
 
 .login_content--label {
     width: 100%;
-    margin: 20px 0 10px 30px;
+    margin: 20px 0 10px 10%;
     font-size: 0.6rem;
 }
 
@@ -52,5 +52,5 @@
     height: 40px;
     border: 1px solid #8f8f8f;
     border-radius: 2px;
-    margin: 0 10% 0 5%;
+    margin: 0 5% 0 5%;
 }

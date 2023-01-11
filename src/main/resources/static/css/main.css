@@ -7,8 +7,8 @@
 }
 
 .main_item {
-    width: 100%;
-    padding: 0 10px;
+    width: 80%;
+    padding: 0 10%;
     justify-content: space-between;
 }
 
@@ -43,4 +43,22 @@
     .main_text {
         display: none;
     }
+}
+
+.footer {
+    width: 100%;
+    background-color: #fff;
+    border-top: #000;
+    z-index: 20;
+    margin: 0 0 0 10%;
+    padding: 5px 40px;
+}
+
+.footer_copyright {
+    font-size: 0.8rem;
+}
+
+.footer_item p {
+    font-size: 0.8rem;
+    margin: 10px 0;
 }

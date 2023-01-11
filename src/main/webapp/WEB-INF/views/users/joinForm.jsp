@@ -98,8 +98,7 @@
                                 <button class="content_item--button" id="btnEmailSameCheck" type="button">이메일
                                     중복체크</button>
                             </div>
-                            <input class="content_box" id="nickname" type="text" placeholder="닉네임을 입력해주세요."
-                                maxlength="20">
+                            <input class="content_box" id="email" type="text" placeholder="이메일을 입력해주세요." maxlength="20">
                         </div>
                         <span class="emailValid" style="padding-left: 120px; color: red; display: none"></span>
 
@@ -107,7 +106,7 @@
                             <div class="content_item">
                                 <div class="content_item--text">주소</div>
                                 <input class="content_item--button" id="postcode" type="text" placeholder="우편번호"
-                                    readonly onclick="findAddress()">
+                                    readonly onclick="findAddress()" style="border-radius:5px;">
                                 <button class="content_item--button" id="btnAddress" type="button"
                                     onclick="findAddress()">우편번호찾기</button>
                             </div>

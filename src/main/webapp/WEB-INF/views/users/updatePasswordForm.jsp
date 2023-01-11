@@ -3,35 +3,41 @@
 
         <input id="usersId" type="hidden" value="${principal.usersId}" />
 
-        <div class="container">
-            <h2>비밀번호변경</h2>
-            <form>
-                <div class="left_input">
-                    <br />
-                    <div class="mb-3">
-                        ◆ 현재 비밀번호 <input id="passwordNow" type="password" class="form-control"
-                            placeholder="현재 비밀번호를 입력해주세요">
-                    </div>
-                    <br />
-                    <div class="mb-3">
-                        ◆ 새 비밀번호 <input id="password" type="password" class="form-control" placeholder="새 비밀번호를 입력해주세요">
-                    </div>
-                    <br />
-                    <div class="mb-3">
-                        ◆ 새 비밀번호확인
-                        <span id="passwordCheck" style="visibility: hidden; color: tomato;">
-                            -----비밀번호가 같지 않습니다! </span>
-                        <input id="passwordConfirm" type="password" class="form-control"
-                            placeholder="비밀번호를 한 번 더 입력해주세요">
-                    </div>
-                    <br />
+        <div class="updatePassword_wrapper">
+            <h2 class="updatePassword_title">비밀번호변경</h2>
+
+            <div class="updatePassword_now">
+                <div class="updatePassword_flex">
+                    <div class="updatePassword_menu">현재 비밀번호</div>
+                    <button class="updatePassword_now_button" id="btnEmailSameCheck" type="button">비밀번호확인</button>
                 </div>
-            </form>
+                <input id="passwordNow" type="password" class="updatePassword_input" placeholder="현재 비밀번호를 입력해주세요">
+            </div>
 
-            <div class="mb-5"></div>
+            <div class="updatePassword_new">
+                <div class="content">
+                    <div class="content_item">
+                        <div class="updatePassword_menu">새 비밀번호</div>
+                    </div>
+                    <input class="updatePassword_input" id="password" type="password" placeholder="새 비밀번호를 입력해주세요."
+                        maxlength="20">
+                </div>
+                <span class="passwordValid" style="padding-left: 120px; color: red; display: none"></span>
 
-            <div class="d-grid gap-1 col-2 mx-auto">
-                <button id="btnUpdatePassword" type="button" class="btn btn-primary">비밀번호변경완료</button>
+                <div class="content">
+                    <div class="updatePassword_flex">
+                        <div class="updatePassword_menu">새 비밀번호확인</div>
+                        <div class="updatePassword_msg" id="passwordCheck" style="visibility: hidden; color: tomato;">
+                            -----비밀번호가 같지 않습니다! </div>
+                    </div>
+                    <input class="updatePassword_input" id="passwordConfirm" type="password"
+                        placeholder="새 비밀번호를 한 번 더 입력해주세요." maxlength="20">
+                </div>
+                <span class="passwordCheckValid" style="padding-left: 120px; color: red; display: none"></span>
+            </div>
+
+            <div class="updatePassword_button">
+                <button id="btnUpdatePassword" type="button" class="updatePassword_button_item">비밀번호 변경</button>
             </div>
 
         </div>

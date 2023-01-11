@@ -3,60 +3,78 @@
 
         <input id="usersId" type="hidden" value="${principal.usersId}" />
 
-        <div class="container">
-            <h2>나의 정보 수정</h2>
+        <div class="updateUsers_wrapper">
+            <h2 class="updateUsers_title">프로필</h2>
+            <div class="updateUsers_container">
+                <div class="updateUsers_box--top">
+                    <div class="updateUsers_photo">
+                        <img src="/img/${usersPS.photo}">
+                    </div>
+                    <br />
+                    <div class="updateUsers_photoname">
+                        <input type="file" id="file" accept="image/*" onchange="setThumbnail(event)">
+                    </div>
+                    <div class="updateUsers_photo" id="imageContainer" style="display:none;"></div>
+                </div>
+                <div class="updateUsers_box--bottom">
+                    <div class="updateUsers_box--text">${usersPS.realname}</div>
+                    <div class="updateUsers_box--text">${usersPS.username}</div>
+                </div>
+            </div>
+
             <form>
-                <div class="left_input">
-                    <br />
-                    <div class="mb-3 mt-3" id="username">
-                        <h3>◆아이디</h3> ${usersPS.username}
+                <div class="updateUsers_under">
+                    <div class="updateUsers_content">
+                        <div class="updateUsers_content_item">
+                            <div class="updateUsers_content_item--text">닉네임</div>
+                            <button class="updateUsers_content_item--button" id="btnNicknameSameCheck" type="button">닉네임
+                                중복체크</button>
+                        </div>
+                        <input class="updateUsers_input_box" id="nickname" value="${usersPS.nickname}" type="text"
+                            placeholder="${usersPS.nickname}" maxlength="20">
                     </div>
-                    <br />
-                    <div class="mb-3 mt-3" id="realname">
-                        <h3>◆이름</h3>${usersPS.realname}
+                    <span class="nicknameValid" style="padding-left: 120px; color: red; display: none"></span>
+
+                    <div class="updateUsers_content">
+                        <div class="updateUsers_content_item">
+                            <div class="updateUsers_content_item--text">이메일</div>
+                            <button class="updateUsers_content_item--button" id="btnEmailSameCheck" type="button">이메일
+                                중복체크</button>
+                        </div>
+                        <input class="updateUsers_input_box" id="email" type="text" value="${usersPS.email}"
+                            placeholder="${usersPS.email}" maxlength="20">
                     </div>
-                    <br />
-                    <div class="mb-3 mt-3">
-                        <h3>◆닉네임</h3>
-                        <input id="nickname" type="text" value="${usersPS.nickname}" class="form-control"
-                            placeholder="${usersPS.nickname}">
+                    <span class="emailValid" style="padding-left: 120px; color: red; display: none"></span>
+
+                    <div class="updateUsers_content">
+                        <div class="updateUsers_content_item">
+                            <div class="updateUsers_content_item--text">주소</div>
+                            <input class="updateUsers_content_item--button" id="postcode" type="text"
+                                value="${usersAddress.zipCode}" placeholder="${usersAddress.zipCode}" readonly
+                                onclick="findAddress()" style="border-radius:5px;">
+                            <button class="updateUsers_content_item--button" id="btnAddress" type="button"
+                                onclick="findAddress()">우편번호찾기</button>
+                        </div>
+                        <input class="updateUsers_input_box" id="addr" type="text" value="${usersAddress.roadName}"
+                            placeholder="${usersAddress.roadName}" readonly>
+                        <input class="updateUsers_input_box" id="detailAddress" type="text"
+                            value="${usersAddress.detailAddress}" placeholder="${usersAddress.detailAddress}">
                     </div>
-                    <div class="mb-3 mt-3">
-                        <h3>◆이메일</h3><input id="email" type="text" value="${usersPS.email}" class="form-control"
-                            placeholder="${usersPS.email}">
+
+                    <div class="updateUsers_content">
+                        <div class="updateUsers_content_item">
+                            <div class="updateUsers_content_item--text">연락처</div>
+                            <button class="updateUsers_content_item--button" id="btnPhoneSameCheck" type="button">연락처
+                                중복체크</button>
+                        </div>
+                        <input class="updateUsers_input_box" id="phone" type="text" value="${usersPS.phone}"
+                            placeholder="${usersPS.phone}" maxlength="20">
                     </div>
-                    <br />
-                    <div class="mb-3">
-                        ◆주소
-                        <input id="postcode" type="text" placeholder="${usersAddress.zipCode}"
-                            value="${usersAddress.zipCode}" onclick="findAddress()">
-                        <button id="btnAddress" type="button" class="btn btn-primary"
-                            onclick="findAddress()">우편번호찾기</button>
-                        <br>
-                        <input id="addr" type="text" placeholder="${usersAddress.roadName}"
-                            value="${usersAddress.roadName}" style="width: 620px;" readonly>
-                        <input id="detailAddress" type="text" placeholder="${usersAddress.detailAddress}"
-                            value="${usersAddress.detailAddress}" style="width: 620px;">
-                    </div>
-                    <br />
-                    <div class="mb-3 mt-3">
-                        <h3>◆연락처</h3><input id="phone" type="text" value="${usersPS.phone}" class="form-control"
-                            placeholder="${usersPS.phone}">
-                    </div>
-                    <br />
-                    <div class="mb-3">◆사진</div>
-                    <input type="file" id="file" onchange="setThumbnail(event)" />
-                    <div id="imageContainer">
-                        <img id="oldImg" src="/img/${usersPS.photo}">
-                    </div>
-                    <br />
                 </div>
             </form>
 
-            <div class="mb-5"></div>
-
-            <div class="d-grid gap-1 col-2 mx-auto">
-                <button id="btnUpdate" type="button" class="btn btn-primary">회원수정완료</button>
+            <div class="updateUsers_button">
+                <button class="updateUsers_button_item" id="btnUpdate" type="button">회원수정완료</button>
             </div>
 
         </div>

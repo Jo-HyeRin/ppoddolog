@@ -1,0 +1,88 @@
+.detailUsers_wrapper {
+    width: 100%;
+    margin: 60px 0 0 200px;
+    padding-top: 40px;
+}
+
+.detailUsers_title {
+    width: 50%;
+    font-size: 1.5rem;
+}
+
+.detailUsers_container {
+    display: flex;
+    justify-content: center;
+    width: 50%;
+    box-shadow: 0 0 1px #000;
+    border-radius: 5px;
+    padding: 2.5%;
+    margin-bottom: 20px;
+}
+
+.detailUsers_photo {
+    width: 50%;
+}
+
+.content_item--photo img {
+    width: 100%;
+    border-radius: 30px;
+}
+
+.detailUsers_box {
+    width: 50%;
+    margin: 15% 0 0 10%;
+}
+
+.detailUsers_content_bold {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #666;
+}
+
+.detailUsers_content_normal {
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.detailUsers_box {
+    padding: 2.5%;
+}
+
+.detailUsers_under {
+    width: 50%;
+    box-shadow: 0 0 1px #000;
+    border-radius: 5px;
+    padding: 4.5% 2.5% 2.5% 2.5%;
+    margin-bottom: 20px;
+}
+
+.detailUsers_content {
+    margin-bottom: 2%;
+}
+
+.detailUsers_content_item {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detailUsers_content_item--menu {
+    font-size: 1rem;
+}
+
+.detailUsers_content_item--val {
+    font-size: 1rem;
+    color: #888;
+}
+
+.detailUsers_button {
+    width: 50%;
+}
+
+.detailUsers_button_item {
+    width: 30%;
+    margin: 0 1%;
+    height: 30px;
+    border: 1px solid #8f8f8f;
+    border-radius: 5px;
+    font-size: 0.8rem;
+}

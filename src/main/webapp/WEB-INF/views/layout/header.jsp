@@ -13,6 +13,10 @@
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
             <link href="/css/style.css" rel="stylesheet">
             <link href="/css/header-other.css" rel="stylesheet">
+            <link href="/css/footer.css" rel="stylesheet">
+            <link href="/css/navigation.css" rel="stylesheet">
+            <link href="/css/detailUsers.css" rel="stylesheet">
+            <link href="/css/updateUsers.css" rel="stylesheet">
         </head>
 
         <body>
@@ -27,31 +31,38 @@
                             </span>
                         </h1>
                         <div class="header_end">
-                            <button class="header_profile" onclick='location.href="/main"'>유저</button>
+                            <button class="header_profile" onclick='location.href="/main"'></button>
+                            <div class="header_user">${principal.username}님 환영합니다:)</div>
                         </div>
                     </div>
                 </header>
                 <!-- header end -->
-                <nav class="navbar navbar-expand-sm bg-warning navbar-dark">
-                    <ul class="navbar-nav" style="width: 100%">
+
+                <!-- navigation start -->
+                <nav class="nav">
+                    <ul class="nav_wrapper">
                         <c:choose>
                             <c:when test="${empty principal}">
                                 <li class="nav-link">
-                                    <a href="/loginForm" style="color: #ffffff;">로그인/회원가입</a>
+                                    <button class="nav_icon">&#9829;</button>
+                                    <button class="nav_menu" onclick='location.href="/loginForm"'>로그인/회원가입</button>
                                 </li>
                             </c:when>
                             <c:when test="${principal.role == 'admin'}">
                                 <li class="nav-link">
-                                    <a href="/admin/${principal.usersId}/activeUsersList"
-                                        style="color: #ffffff;">활동회원목록</a>
+                                    <button class="nav_icon">&#9829;</button>
+                                    <button class="nav_menu"
+                                        onclick='location.href="/admin/${principal.usersId}/activeUsersList"'>활동회원목록</button>
                                 </li>
                                 <li class="nav-link">
-                                    <a href="/admin/${principal.usersId}/stopUsersList"
-                                        style="color: #ffffff;">정지회원목록</a>
+                                    <button class="nav_icon">&#9829;</button>
+                                    <button class="nav_menu"
+                                        onclick='location.href="/admin/${principal.usersId}/stopUsersList"'>정지회원목록</button>
                                 </li>
                                 <li class="nav-link">
-                                    <a href="/admin/${principal.usersId}/leaveUsersList"
-                                        style="color: #ffffff;">탈퇴회원목록</a>
+                                    <button class="nav_icon">&#9829;</button>
+                                    <button class="nav_menu"
+                                        onclick='location.href="/admin/${principal.usersId}/leaveUsersList"'>탈퇴회원목록</button>
                                 </li>
                                 <li class="nav-link">
                                     <a href="/logout" onclick="disconnect()" style="color: #ffffff;">로그아웃</a>
@@ -59,18 +70,24 @@
                             </c:when>
                             <c:otherwise>
                                 <li class="nav-link">
-                                    <a href="/board/users/${principal.usersId}/list" style="color: #ffffff;">게시글목록</a>
+                                    <button class="nav_icon">&#9829;</button>
+                                    <button class="nav_menu"
+                                        onclick='location.href="/board/users/${principal.usersId}/list"'>게시글목록</button>
                                 </li>
                                 <li class="nav-link">
-                                    <a href="/users/${principal.usersId}/detail" style="color: #ffffff;">내정보보기</a>
+                                    <button class="nav_icon">&#9829;</button>
+                                    <button class="nav_menu"
+                                        onclick='location.href="/users/${principal.usersId}/detail"'>내정보보기</button>
                                 </li>
                                 <li class="nav-link">
-                                    <a href="/logout" onclick="disconnect()" style="color: #ffffff;">로그아웃</a>
+                                    <button class="nav_icon">&#9829;</button>
+                                    <button class="nav_menu" onclick='location.href="/logout"'>로그아웃</button>
                                 </li>
                             </c:otherwise>
                         </c:choose>
                     </ul>
                 </nav>
+                <!-- navigation end -->
 
                 <script>
                     function disconnect() {

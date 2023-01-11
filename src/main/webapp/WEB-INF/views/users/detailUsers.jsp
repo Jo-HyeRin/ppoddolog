@@ -3,48 +3,52 @@
 
         <input id="usersId" type="hidden" value="${principal.usersId}" />
 
-        <div class="container">
-            <h2>나의 정보 보기</h2>
-            <form>
-                <div class="left_input">
-                    <br />
-                    <div id="username">${usersPS.username}</div>
-                    <br />
-                    <div id="realname">${usersPS.realname}</div>
-                    <br />
-                    <div id="nickname">${usersPS.nickname}</div>
-                    <br />
-                    <div id="email">${usersPS.email}</div>
-                    <br />
-                    <div class="mb-3">◆주소</div>
-                    <input id="content" type="text" value="${usersPS.address}" class="form-control"
-                        placeholder=${usersPS.address} readonly>
-                    <br />
-                    <div id="phone">${usersPS.phone}</div>
-                    <br />
-                    <div id="photo">${usersPS.photo}</div>
-                    <br />
-                    <div class="mb-3">◆사진</div>
-                    <div class="right">
-                        <img src="/img/${usersPS.photo}" style="width: 200px">
+        <div class="detailUsers_wrapper">
+            <h2 class="detailUsers_title">프로필</h2>
+            <div class="detailUsers_container">
+                <div class="detailUsers_photo">
+                    <div class="content_item--photo">
+                        <img src="/img/${usersPS.photo}">
                     </div>
                 </div>
-            </form>
-
-            <div class="mb-5"></div>
-
-            <div class="d-grid gap-1 col-2 mx-auto">
-                <button id="btnUpdateUsers" type="submit" class="btn btn-primary">회원수정하기</button>
+                <div class="detailUsers_box">
+                    <div class="detailUsers_content_bold">${usersPS.nickname}</div>
+                    <div class="detailUsers_content_item">
+                        <div class="detailUsers_content_normal">${usersPS.username}</div>
+                    </div>
+                </div>
             </div>
-            <br />
-            <div class="d-grid gap-1 col-2 mx-auto">
-                <button id="btnUpdatePassword" type="submit" class="btn btn-primary">비밀번호변경</button>
-            </div>
-            <br />
-            <div class="d-grid gap-1 col-2 mx-auto">
-                <button id="btnLeaveUsers" type="button" class="btn btn-primary">회원탈퇴하기</button>
+            <h2 class="detailUsers_title">기본 정보</h2>
+            <div class="detailUsers_under">
+                <div class="detailUsers_content">
+                    <div class="detailUsers_content_item">
+                        <div class="detailUsers_content_item--menu">이름</div>
+                        <div class="detailUsers_content_item--val">${usersPS.realname}</div>
+                    </div>
+                </div>
+                <div class="detailUsers_content">
+                    <div class="detailUsers_content_item">
+                        <div class="detailUsers_content_item--menu">이메일</div>
+                        <div class="detailUsers_content_item--val">${usersPS.email}</div>
+                    </div>
+                </div>
+                <div class="detailUsers_content">
+                    <div class="detailUsers_content_item--menu">주소</div>
+                    <div class="detailUsers_content_item--val">${usersPS.address}</div>
+                </div>
+                <div class="detailUsers_content">
+                    <div class="detailUsers_content_item">
+                        <div class="detailUsers_content_item--menu">연락처</div>
+                        <div class="detailUsers_content_item--val">${usersPS.phone}</div>
+                    </div>
+                </div>
             </div>
 
+            <div class="detailUsers_button">
+                <button class="detailUsers_button_item" id="btnUpdateUsers" type="button">회원정보수정</button>
+                <button class="detailUsers_button_item" id="btnUpdatePassword" type="button">비밀번호변경</button>
+                <button class="detailUsers_button_item" id="btnLeaveUsers" type="button">회원탈퇴</button>
+            </div>
         </div>
 
         <script>

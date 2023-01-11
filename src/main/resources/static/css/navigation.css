@@ -26,14 +26,16 @@
 .nav_icon {
     border: none;
     background-color: transparent;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 }
 
 .nav_menu {
-    margin: 8px 0 0 8px;
+    margin: 5px 0 0 8px;
     font-size: 1.2rem;
     color: black;
     font-weight: bold;
+    border: none;
+    background-color: transparent;
 }
 
 /* 800px 이하일 때 텍스트 없애기 */
